@@ -1,4 +1,4 @@
-from product import Product
+from .product import Product
 
 
 class Electronics(Product):
@@ -9,8 +9,8 @@ class Electronics(Product):
         model: int,
         colour: str,
         price: float,
+        quantity: int,
         warranty_years: int,
-        quantity: int = 1,
     ):
         """
         Initialize Electronics product with warranty_years.
@@ -25,6 +25,6 @@ class Electronics(Product):
     def warranty_years(self):
         return self._warranty_years
 
-    def get_product_info(self):
+    def __str__(self):
         base_info = super().get_product_info()
         return f"{base_info}, Warranty: {self._warranty_years} years"
