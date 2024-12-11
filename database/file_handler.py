@@ -1,6 +1,11 @@
 import json
 from pathlib import Path
 import os
+import sys
+from product_category_factory import ProductCategoryFactory
+
+sys.path.append(str(Path(__file__).parent.parent))
+from inventory.products.product import Product
 
 # region mocking data
 test_data = [
@@ -29,7 +34,20 @@ test_data = [
     }
 ]
 # endregion
-data = []
+
+
+# region custom class handler
+class ProductEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Product):
+            return obj.__dict__
+        else:
+            # call base class implementation which takes are of
+            # raising exceptions for unsupported types
+            return json.JSONEncoder.default(self, obj)
+
+
+# endregion
 
 
 def save_to_json(target_path, target_file, data):
@@ -37,14 +55,16 @@ def save_to_json(target_path, target_file, data):
     current_path = Path.cwd()
     # go to the parent folder
     current_path = current_path.parent
+    information_to_safe = []
+    for entry in data:
+        information_to_safe.append(ProductCategoryFactory.get_category_table(entry))
     # confirm target_path is valid and equal to current path
     if current_path == Path(target_path):
         with open(f"{current_path}/{target_file}", "w") as file:
-            json.dump(data, file, indent=4)
+            json.dump(information_to_safe, file, indent=4)
 
 
 def load_from_json():
-    global data
     target_file = "products.json"
     # get the current path of the file, regardless of where it is executed from
     current_path = Path.cwd()
@@ -62,6 +82,4 @@ if __name__ == "__main__":
 
     # save and load the data
     save_to_json("database", "products.json", test_data)
-    load_from_json()
-
-    print(data)
+    print(load_from_json())
