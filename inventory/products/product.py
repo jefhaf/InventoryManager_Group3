@@ -21,14 +21,8 @@ class Product(ABC):
         model: int,
         colour: str,
         price: float,
-        quantity=1,
+        quantity: int,
     ):
-
-        if not self.validate_id(id):
-            raise ValueError(
-                f"Invalid ID format for {id}. "
-                "Must start with two letters followed by numbers."
-            )
 
         self.id = id
         self.name = name
@@ -66,9 +60,6 @@ class Product(ABC):
     def assign_id(self) -> str:
         """Generate a unique ID using the
         category prefix and UUID."""
-        pass
-
-    def validate_id(self, id: str) -> bool:
         pass
 
     @property
