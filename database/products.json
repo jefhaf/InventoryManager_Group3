@@ -1,0 +1,25 @@
+[
+    {
+        "table_name": "electronics",
+        "records": [
+            {
+                "make": "Samsung",
+                "model": "Galaxy S23",
+                "category": "Electronics",
+                "quantity": 25,
+                "color": "Black",
+                "price": 750.0,
+                "unique_id": "EL001"
+            },
+            {
+                "make": "Apple",
+                "model": "MacBook Pro 14\"",
+                "category": "Electronics",
+                "quantity": 15,
+                "color": "Silver",
+                "price": 1890.0,
+                "unique_id": "EL002"
+            }
+        ]
+    }
+]
