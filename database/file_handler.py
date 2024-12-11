@@ -52,6 +52,9 @@ def load_from_json():
     if os.path.exists(f"{current_path}/{target_file}"):
         with open(f"{current_path}/{target_file}", "r") as file:
             data = json.load(file)
+    else:
+        print(f"File {target_file} does not exist")
+    return data
 
 
 # only run if file_handler is run directly
