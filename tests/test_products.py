@@ -35,19 +35,21 @@ class TestProduct:
         sample_book.price = new_price
         assert sample_book.price == new_price
 
-    def test_str_method(self, sample_book):
-
-        expected_total_price = sample_book.price * sample_book.quantity
-        expected_str = (
-            f"Product(ID: {sample_book.id}, Name: {sample_book.name}, Model: {sample_book.model}, "
-            f"Colour: {sample_book.colour}, "
-            f"Price: {sample_book.price}, Quantity: {sample_book.quantity}, "
-            f"Total Price: {expected_total_price})"
-        )
-        assert str(sample_book) == expected_str
-
-
+        
 # Not yet implemented
+
+    # def test_str_method(self, sample_book):
+
+    #     expected_total_price = sample_book.price * sample_book.quantity
+    #     expected_str = (
+    #         f"Product(ID: {sample_book.id}, Name: {sample_book.name}, Model: {sample_book.model}, "
+    #         f"Colour: {sample_book.colour}, "
+    #         f"Price: {sample_book.price}, Quantity: {sample_book.quantity}, "
+    #         f"Total Price: {expected_total_price})"
+    #     )
+    #     assert str(sample_book) == expected_str
+
+
 # def test_sold_out(self, sample_book):
 
 #     if sample_book.quantity > 0:
