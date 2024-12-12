@@ -38,5 +38,5 @@ class Electronics(Product):
         return self._warranty_years
 
     def __str__(self):
-        base_info = super().get_product_info()
+        base_info = super().__str__()
         return f"{base_info}, Warranty: {self._warranty_years} years"
