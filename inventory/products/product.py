@@ -64,18 +64,18 @@ class Product(ABC):
 
     @property
     def price(self):
-        return self._price
+        return self.__price
 
     @price.setter
     def price(self, new_price: float):
-        self._price = new_price
+        self.__price = new_price
 
     def update_quantity(self, quantity: int):
         self._quantity += quantity
 
     def get_total_price(self) -> int:
         """Calculate the total price based on quantity."""
-        return self.price * self.quantity
+        return self.__price * self.quantity
 
     def __str__(self):
         return (
