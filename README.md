@@ -142,3 +142,9 @@ How to collaborate on github?
         Resolve Conflicts: Communicate actively if merge conflicts occur. Resolve them collaboratively if needed.
 
 Note: Ensure you're working on a separate branch to avoid overwriting others' work on the main branch. If someone else has made changes to the same branch, you may need to pull their updates first to avoid conflicts. After completing your work on a branch, create a Pull Request (PR) on GitHub. Other team members review and approve the changes. Once approved, the branch is merged into the main branch. Communicate: Let your teammates know when you’re pushing changes to avoid overlap.
+
+Here are the names of the new branches to work on:
+ * [new branch]      inventory-manager-branch -> origin/inventory-manager-branch
+ * [new branch]      json-branch              -> origin/json-branch
+ * [new branch]      product-branch           -> origin/product-branch
+ * [new branch]      testing-branch           -> origin/testing-branch

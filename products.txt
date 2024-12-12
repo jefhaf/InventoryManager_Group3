@@ -1,0 +1,246 @@
+Electronics
+
+    Make: Samsung
+    Model: Galaxy S23
+    Category: Electronics
+    Quantity: 25
+    Color: Black
+    Price: 750.00 €
+    Unique ID: EL001
+
+    Make: Apple
+    Model: MacBook Pro 14"
+    Category: Electronics
+    Quantity: 15
+    Color: Silver
+    Price: 1,890.00 €
+    Unique ID: EL002
+
+    Make: Sony
+    Model: WH-1000XM5
+    Category: Electronics
+    Quantity: 30
+    Color: White
+    Price: 330.00 €
+    Unique ID: EL003
+
+    Make: LG
+    Model: OLED55C3PUA TV
+    Category: Electronics
+    Quantity: 10
+    Color: Black
+    Price: 1,450.00 €
+    Unique ID: EL004
+
+    Make: Dell
+    Model: XPS 13
+    Category: Electronics
+    Quantity: 20
+    Color: Gray
+    Price: 1,200.00 €
+    Unique ID: EL005
+
+Food
+
+    Make: Haribo
+    Model: Goldbären
+    Category: Food
+    Quantity: 100
+    Price: 1.19 €
+    Unique ID: FD001
+
+    Make: Coca-Cola
+    Model: Original 12-pack
+    Category: Food
+    Quantity: 50
+    Price: 6.50 €
+    Unique ID: FD002
+
+    Make: Lay's
+    Model: Classic Chips (Family Size)
+    Category: Food
+    Quantity: 40
+    Price: 4.00 €
+    Unique ID: FD003
+
+    Make: Quaker
+    Model: Oats
+    Category: Food
+    Quantity: 30
+    Price: 3.80 €
+    Unique ID: FD004
+
+    Make: Kellogg's
+    Model: Corn Flakes
+    Category: Food
+    Quantity: 35
+    Price: 4.30 €
+    Unique ID: FD005
+
+Apparel
+
+    Make: Nike
+    Model: Air Force 1 Sneakers
+    Category: Apparel
+    Quantity: 20
+    Color: White
+    Price: 105.00 €
+    Unique ID: AP001
+
+    Make: Levi's
+    Model: 501 Original Jeans
+    Category: Apparel
+    Quantity: 25
+    Color: Blue
+    Price: 66.00 €
+    Unique ID: AP002
+
+    Make: Adidas
+    Model: Trefoil Hoodie
+    Category: Apparel
+    Quantity: 30
+    Color: Black
+    Price: 62.00 €
+    Unique ID: AP003
+
+    Make: Under Armour
+    Model: HeatGear Compression Shirt
+    Category: Apparel
+    Quantity: 50
+    Color: Gray
+    Price: 34.00 €
+    Unique ID: AP004
+
+    Make: Patagonia
+    Model: Better Sweater Jacket
+    Category: Apparel
+    Quantity: 15
+    Color: Navy
+    Price: 134.00 €
+    Unique ID: AP005
+
+Household
+
+    Make: Dyson
+    Model: V15 Detect Vacuum Cleaner
+    Category: Household
+    Quantity: 10
+    Color: Yellow
+    Price: 720.00 €
+    Unique ID: HH001
+
+    Make: Philips
+    Model: Hue Smart Light Bulbs (Pack of 4)
+    Category: Household
+    Quantity: 25
+    Color: Multicolor
+    Price: 120.00 €
+    Unique ID: HH002
+
+    Make: iRobot
+    Model: Roomba i3+
+    Category: Household
+    Quantity: 8
+    Color: Gray
+    Price: 580.00 €
+    Unique ID: HH003
+
+    Make: Tefal
+    Model: ActiFry Genius XL Air Fryer
+    Category: Household
+    Quantity: 15
+    Color: Black
+    Price: 290.00 €
+    Unique ID: HH004
+
+    Make: Instant Pot
+    Model: Duo 7-in-1
+    Category: Household
+    Quantity: 20
+    Color: Stainless Steel
+    Price: 130.00 €
+    Unique ID: HH005
+
+Toys
+
+    Make: LEGO
+    Model: Star Wars Millennium Falcon Set
+    Category: Toys
+    Quantity: 30
+    Color: Multicolor
+    Price: 150.00 €
+    Unique ID: TY001
+
+    Make: Mattel
+    Model: Barbie Dreamhouse
+    Category: Toys
+    Quantity: 12
+    Color: Pink
+    Price: 320.00 €
+    Unique ID: TY002
+
+    Make: Nerf
+    Model: Elite 2.0 Blaster
+    Category: Toys
+    Quantity: 40
+    Color: Blue/Orange
+    Price: 40.00 €
+    Unique ID: TY003
+
+    Make: Hasbro
+    Model: Monopoly Classic Edition
+    Category: Toys
+    Quantity: 50
+    Color: Multicolor
+    Price: 25.00 €
+    Unique ID: TY004
+
+    Make: Fisher-Price
+    Model: Laugh & Learn Smart Stages Puppy
+    Category: Toys
+    Quantity: 25
+    Color: Brown
+    Price: 35.00 €
+    Unique ID: TY005
+
+Books
+
+    Make: J.K. Rowling
+    Model: Harry Potter and the Sorcerer's Stone
+    Category: Books
+    Quantity: 50
+    Color: N/A
+    Price: 10.00 €
+    Unique ID: BK001
+
+    Make: George Orwell
+    Model: 1984
+    Category: Books
+    Quantity: 40
+    Color: N/A
+    Price: 8.00 €
+    Unique ID: BK002
+
+    Make: J.R.R. Tolkien
+    Model: The Hobbit
+    Category: Books
+    Quantity: 35
+    Color: N/A
+    Price: 12.00 €
+    Unique ID: BK003
+
+    Make: Yuval Noah Harari
+    Model: Sapiens: A Brief History of Humankind
+    Category: Books
+    Quantity: 30
+    Color: N/A
+    Price: 15.00 €
+    Unique ID: BK004
+
+    Make: Michelle Obama
+    Model: Becoming
+    Category: Books
+    Quantity: 25
+    Color: N/A
+    Price: 18.00 €
+    Unique ID: BK005
