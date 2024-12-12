@@ -1,5 +1,5 @@
-from inventory import products
-from database import file_handler
+from inventory import *
+from database import *
 
 
 class InventoryManager:
