@@ -21,11 +21,6 @@ class Apparel(Product):
         """Return whether the product is returnable."""
         pass
 
-    def warranty_info(self) -> str:
-        """Return warranty information
-        specific to the product."""
-        pass
-
     def expiry_date(self) -> str:
         """Return the expiry date of
         the product if applicable."""
