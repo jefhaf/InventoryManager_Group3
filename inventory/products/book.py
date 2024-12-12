@@ -4,7 +4,6 @@ from .product import Product
 class Book(Product):
     def __init__(
         self,
-        id: str,
         name: str,
         model: int,
         colour: str,
@@ -15,20 +14,19 @@ class Book(Product):
         """
         Initialize Electronics product with warranty_years.
         """
-        super().__init__(id, name, model, colour, price, quantity)
-        self.author = author
-        self.category = "Book"
+        super().__init__(
+            name=name,
+            model=model,
+            colour=colour,
+            price=price,
+            quantity=quantity,
+            category="Book"
+        )
 
-    def category(self):
-        return "Book"
+        self.author = author
 
     def is_returnable(self) -> bool:
         """Return whether the product is returnable."""
-        pass
-
-    def warranty_info(self) -> str:
-        """Return warranty information
-        specific to the product."""
         pass
 
     def expiry_date(self) -> str:
@@ -37,5 +35,5 @@ class Book(Product):
         pass
 
     def __str__(self):
-        base_info = super().get_product_info()
+        base_info = super().__str__()
         return f"{base_info}, Author: {self._author}"
