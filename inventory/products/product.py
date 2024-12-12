@@ -16,41 +16,25 @@ class Product(ABC):
 
     def __init__(
         self,
-        id: str,
         name: str,
         model: int,
         colour: str,
         price: float,
-        quantity=1,
+        quantity: int,
+        category: str
     ):
 
-        if not self.validate_id(id):
-            raise ValueError(
-                f"Invalid ID format for {id}. "
-                "Must start with two letters followed by numbers."
-            )
-
-        self.id = id
+        self.id = self.assign_id(category)
         self.name = name
         self.model = model
         self.__price = price
         self.quantity = quantity
         self.colour = colour
-
-    @abstractmethod
-    def category(self):
-        """Return the category of the product."""
-        pass
+        self.category = category
 
     @abstractmethod
     def is_returnable(self) -> bool:
         """Return whether the product is returnable."""
-        pass
-
-    @abstractmethod
-    def warranty_info(self) -> str:
-        """Return warranty information
-        specific to the product."""
         pass
 
     @abstractmethod
@@ -59,37 +43,43 @@ class Product(ABC):
         the product if applicable."""
         pass
 
-    def is_sold_out(self) -> bool:
-        """Return whether the product is sold out."""
-        return self.quantity == 0
-
-    def assign_id(self) -> str:
+    def assign_id(self, category: str) -> str:
         """Generate a unique ID using the
         category prefix and UUID."""
         pass
 
-    def validate_id(self, id: str) -> bool:
-        pass
-
     @property
     def price(self):
-        return self._price
+        return self.__price
 
     @price.setter
     def price(self, new_price: float):
-        self._price = new_price
+        self.__price = new_price
 
     def update_quantity(self, quantity: int):
-        self._quantity += quantity
+        self.quantity += quantity
 
     def get_total_price(self) -> int:
         """Calculate the total price based on quantity."""
-        return self.price * self.quantity
+        return self.__price * self.quantity
+
+    def to_dict(self) -> dict:
+        """Serialize the product to a dictionary."""
+        return {
+            "id": self.id,
+            "category": self.category,
+            "name": self.name,
+            "model": self.model,
+            "colour": self.colour,
+            "price": self.price,
+            "quantity": self.quantity
+        }
 
     def __str__(self):
         return (
             f"Product(ID: {self.id}, Name: {self.name}, Model: {self.model}, "
             f"Colour: {self.colour}, "
-            f"Price: {self.price}, Quantity: {self.quantity}, "
-            f"Total Price: {self.get_total_price()})"
+            f"Price: {self.__price}, Quantity: {self.quantity}, "
+            f"Total Price: {self.get_total_price()}, "
+            f"Category: {self.category})"
         )
