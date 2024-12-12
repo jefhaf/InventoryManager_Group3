@@ -34,3 +34,4 @@ class InventoryManager:
     def get_total_inventory_value(self):
         """Calculate total value of the entire inventory"""
         return sum(product.price * product.quantity for product in self.products.values())
+
