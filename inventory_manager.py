@@ -1,9 +1,15 @@
 from inventory import products
+from database import file_handler
 
 
 class InventoryManager:
     def __init__(self):
-        self.products = {}
+        self.products = load_from_json()
+
+    def search_product(self, query):
+        """Search for product in inventory"""
+        results = [product.get_product_info() for name, product in self.products.items() if query.lower() in name.lower()]
+        return results if results else "Product not found"
 
     def add_product(self, product):
         """add new product to inventory"""
