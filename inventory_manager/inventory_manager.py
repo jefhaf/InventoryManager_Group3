@@ -1,10 +1,14 @@
+import sys
+sys.path.append("..")
+from inventory.products.product import Product
 from inventory import products
-from database import file_handler
+from database import FileHandler
 
 
 class InventoryManager:
     def __init__(self):
-        self.product_database = load_from_json()
+        database_filehandler = FileHandler()
+        self.product_database = database_filehandler.load_from_json()
 
     def search_product(self):
         """Search for product in inventory"""
@@ -27,6 +31,10 @@ class InventoryManager:
         pass
 
 
-im = InventoryManager()
+# def im_test():
+#     im = InventoryManager()
 
-print(im.product_database)
+#     print(im.product_database)
+
+
+# im_test()
