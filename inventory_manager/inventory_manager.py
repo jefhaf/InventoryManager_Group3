@@ -3,6 +3,11 @@ import sys
 sys.path.append("..")
 # from inventory.products.product import Product
 from inventory.products.electronics import Electronics
+from inventory.products.food import Food
+from inventory.products.apparel import Apparel
+from inventory.products.household import Household
+from inventory.products.toys import Toys
+from inventory.products.book import Book
 from inventory import products
 from database import FileHandler
 
@@ -25,14 +30,23 @@ class InventoryManager:
         quantity = int(input("Quantity: "))
         price = float(input("Price: "))
         colour = input("Colour: ")
-        warranty_years = input("Warranty in years: ")
 
-        if category.lower() == "electronics":
+        kwargs = {"name": name, "model": model, "category": category, "quantity": quantity, "price": price, "colour": colour}
+
+        new_product = product_factory(kwargs)
+
+        new_product_info = new_product.to_dict()
+
+        for item in self.product_database:
+            if item["table_name"] == "electronics":
+                item["records"].append(new_product_info) 
+
+        """ if category.lower() == "electronics":
             new_product = Electronics(name=name, model=model, warranty_years=warranty_years, quantity=quantity, price=price, colour=colour)
             new_product_info = new_product.to_dict()
             for item in self.product_database:
                 if item["table_name"] == "electronics":
-                    item["records"].append(new_product_info)
+                    item["records"].append(new_product_info) """
 
         FileHandler.save_to_json(self.product_database)
 
@@ -49,15 +63,50 @@ class InventoryManager:
         pass
 
 
-class ProductFactory():
-    def __init__(self, *args, **kwargs):
+def product_factory(**kwargs):
+
+    """Factory method to create product objects based on category"""
+
+    if kwargs["category"].lower() == "electronic":
+
+        warranty_years = input("Warranty in years: ")
+
+        kwargs["warranty_years"] = warranty_years
+
+        return Electronics(**kwargs)
+    
+    elif kwargs["category"].lower() == "food":
         
-    def product_factory(choice):
-        if choice.lower() == "electronic":
-            return Electronic()
-        elif choice.lower() == "toys":
-            return Toys()
-    pass
+        expiration_date = input("Expiration date")
+
+        kwargs["expiration_date"] = expiration_date
+
+        return Food(**kwargs)
+    
+    elif kwargs["category"].lower() == "apparel":
+
+        return Apparel(**kwargs)
+    
+    elif kwargs["category"].lower() == "household":
+
+        return Household(**kwargs)
+    
+    elif kwargs["category"].lower() == "toys":
+
+        return Toys(**kwargs)
+    
+    elif kwargs["category"].lower() == "books":
+
+        author = input("Author: ")
+
+        kwargs["author"] = author
+
+        return Book(**kwargs)
+    
+    else:
+
+        raise ValueError("Invalid category")
+
 
 
 
