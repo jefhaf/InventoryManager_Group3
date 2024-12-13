@@ -3,7 +3,7 @@ import sys
 
 sys.path.append("..")
 from inventory.products.product import Product
-
+sys.path.pop()
 
 # region Filehandler
 class FileHandler:

@@ -31,10 +31,10 @@ class InventoryManager:
         pass
 
 
-# def im_test():
-#     im = InventoryManager()
+def im_test():
+    im = InventoryManager()
 
-#     print(im.product_database)
+    print(im.product_database)
 
 
-# im_test()
+im_test()
