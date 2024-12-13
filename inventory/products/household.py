@@ -3,20 +3,25 @@ from .product import Product
 
 class Household(Product):
 
-    def __init__(self, name: str,
-                 model: int, colour: str,
-                 price: int, quantity: int):
+    def __init__(self, name: str, model: int,
+                 colour: str, price: int,
+                 quantity: int):
         """
         Initialize Household product.
         """
 
-        super().__init__(name=name, model=model,
-                         colour=colour, price=price,
-                         quantity=quantity, category="Household")
+        super().__init__(
+            name=name,
+            model=model,
+            colour=colour,
+            price=price,
+            quantity=quantity,
+            category="Household",
+        )
 
     def is_returnable(self) -> bool:
         """Return whether the product is returnable."""
-        return False  
+        return False
 
     def expiry_date(self) -> str:
         """Return the expiry date of
