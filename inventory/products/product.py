@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import uuid
 
 
 class Product(ABC):
@@ -21,7 +22,7 @@ class Product(ABC):
         colour: str,
         price: float,
         quantity: int,
-        category: str
+        category: str,
     ):
 
         self.id = self.assign_id(category)
@@ -46,7 +47,9 @@ class Product(ABC):
     def assign_id(self, category: str) -> str:
         """Generate a unique ID using the
         category prefix and UUID."""
-        pass
+        prefix = category[:2].upper()
+        unique_id = str(uuid.uuid4().int)[:8]
+        return f"{prefix}{unique_id}"
 
     @property
     def price(self):
@@ -67,13 +70,28 @@ class Product(ABC):
         """Serialize the product to a dictionary."""
         return {
             "id": self.id,
-            "category": self.category,
             "name": self.name,
             "model": self.model,
             "colour": self.colour,
             "price": self.price,
-            "quantity": self.quantity
+            "quantity": self.quantity,
+            "category": self.category,
         }
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        """
+        Deserialize a product from a dictionary.
+        """
+        instance = cls(
+            name=data["name"],
+            model=data["model"],
+            colour=data["colour"],
+            price=data["price"],
+            quantity=data["quantity"]
+        )
+
+        return instance
 
     def __str__(self):
         return (
