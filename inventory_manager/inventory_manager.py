@@ -25,3 +25,8 @@ class InventoryManager:
     def get_total_inventory_value(self):
         """Calculate total value of the entire inventory"""
         pass
+
+
+im = InventoryManager()
+
+print(im.product_database)
