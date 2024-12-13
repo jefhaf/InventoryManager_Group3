@@ -1,10 +1,12 @@
 import json
-from pathlib import Path
-import os
+
+# from pathlib import Path
+# import os
 import sys
 
-sys.path.append(str(Path(__file__).parent.parent))
-from inventory.products import Product
+# sys.path.append(str(Path(__file__).parent.parent))
+sys.path.append("..")
+from inventory.products.product import Product
 
 
 # region Filehandler
