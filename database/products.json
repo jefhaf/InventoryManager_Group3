@@ -1,0 +1,66 @@
+[
+    {
+        "table_name": "electronics",
+        "records": [
+            {
+                "id": "EL16863242",
+                "name": "wrrrggg",
+                "model": "wrgwrg",
+                "colour": "red",
+                "price": 123.0,
+                "quantity": 123,
+                "category": "Electronics",
+                "warranty_years": "222"
+            },
+            {
+                "id": "EL11190550",
+                "name": "tototot",
+                "model": "mamama",
+                "colour": "pinkple",
+                "price": 1.0,
+                "quantity": 55555,
+                "category": "Electronics",
+                "warranty_years": "5"
+            },
+            {
+                "id": "TO22694396",
+                "name": "jellobeangun",
+                "model": "Slinky",
+                "colour": "unicorn",
+                "price": 420.69,
+                "quantity": 7,
+                "category": "Toys"
+            }
+        ]
+    },
+    {
+        "table_name": "food",
+        "records": []
+    },
+    {
+        "table_name": "apparel",
+        "records": []
+    },
+    {
+        "table_name": "household",
+        "records": []
+    },
+    {
+        "table_name": "toys",
+        "records": [
+            {
+                "id": "TO29237336",
+                "name": "lolophaser",
+                "model": "slinky2",
+                "colour": "ruffle",
+                "price": 22.0,
+                "quantity": 12,
+                "category": "Toys"
+            }
+        ]
+    },
+    {
+        "table_name": "books",
+        "records": []
+    }
+]
