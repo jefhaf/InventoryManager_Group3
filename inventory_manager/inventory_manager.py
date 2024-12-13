@@ -1,4 +1,4 @@
-from inventory import *
+from inventory import products
 from database import file_handler
 
 
