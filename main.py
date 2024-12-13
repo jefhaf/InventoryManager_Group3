@@ -1,4 +1,4 @@
-from inventory.inventory_manager import InventoryManager
+from inventory_manager.inventory_manager import InventoryManager
 
 
 
