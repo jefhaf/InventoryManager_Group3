@@ -1,15 +1,37 @@
-[ 
-
-{"table_name": "electronics","records": [ ]},
-
-{"table_name": "food","records": [ ]},
-
-{"table_name": "apparel","records": [ ]},
-
-{"table_name": "household","records": [ ]},
-
-{"table_name": "toys","records": [ ]},
-
-{"table_name": "books","records": [ ]}
-
+[
+    {
+        "table_name": "electronics",
+        "records": [
+            {
+                "id": "EL16863242",
+                "name": "wrrrggg",
+                "model": "wrgwrg",
+                "colour": "red",
+                "price": 123.0,
+                "quantity": 123,
+                "category": "Electronics",
+                "warranty_years": "222"
+            }
+        ]
+    },
+    {
+        "table_name": "food",
+        "records": []
+    },
+    {
+        "table_name": "apparel",
+        "records": []
+    },
+    {
+        "table_name": "household",
+        "records": []
+    },
+    {
+        "table_name": "toys",
+        "records": []
+    },
+    {
+        "table_name": "books",
+        "records": []
+    }
 ]
