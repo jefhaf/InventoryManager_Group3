@@ -1,8 +1,4 @@
 import json
-import sys
-
-sys.path.append("..")
-from inventory.products.product import Product
 
 
 # region Filehandler
@@ -20,7 +16,7 @@ class FileHandler:
                 product_dicts = json.load(file)
         except (FileNotFoundError, ImportError):
             return []
-        return [Product.from_dict(data) for data in product_dicts]
+        return product_dicts
 
     @staticmethod
     def save_users_to_json(users):
