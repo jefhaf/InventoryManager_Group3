@@ -1,4 +1,4 @@
-from .product import Product
+from product import Product
 
 
 class Electronics(Product):
@@ -57,7 +57,6 @@ class Electronics(Product):
             raise ValueError("Invalid category for Electronics product")
 
         instance = cls(
-            id=data["id"],
             name=data["name"],
             model=data["model"],
             colour=data["colour"],
