@@ -42,4 +42,3 @@ class FileHandler:
 
 
 # endregion
-FileHandler.load_from_json()
