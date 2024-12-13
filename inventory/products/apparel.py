@@ -19,9 +19,9 @@ class Apparel(Product):
 
     def is_returnable(self) -> bool:
         """Return whether the product is returnable."""
-        pass
+        return True
 
     def expiry_date(self) -> str:
         """Return the expiry date of
         the product if applicable."""
-        pass
+        return None
