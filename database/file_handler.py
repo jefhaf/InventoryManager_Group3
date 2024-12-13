@@ -8,13 +8,13 @@ from inventory.products.product import Product
 # region Filehandler
 class FileHandler:
     @staticmethod
-    def save_products_to_json(products):
+    def save_to_json(products):
         products_dicts = [product.to_dict() for product in products]
         with open("products.json", "w") as file:
             json.dump(products_dicts, file, indent=4)
 
     @staticmethod
-    def load_products_from_json():
+    def load_from_json():
         try:
             with open("products.json", "r") as file:
                 product_dicts = json.load(file)
