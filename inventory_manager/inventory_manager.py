@@ -73,59 +73,59 @@ class InventoryManager:
 
 
 def product_factory(**kwargs):
-    """Factory method to create product objects based on category"""
+    """Factory method to create
+    product objects based on category"""
 
-    if kwargs["category"].lower() == "electronics":
+    category = kwargs["category"]
 
+    del kwargs["category"]
 
-        warranty_years = input("Warranty in years: ")
+    try:
+        if category.lower() == "electronics":
 
-        kwargs["warranty_years"] = warranty_years
+            warranty_years = input("Warranty in years: ")
 
-        del kwargs["category"]
+            kwargs["warranty_years"] = warranty_years
 
-        return Electronics(**kwargs)
+            return Electronics(**kwargs)
 
-    elif kwargs["category"].lower() == "food":
+        elif category.lower() == "food":
 
-        expiration_date = input("Expiration date")
+            expiration_date = input("Expiration date")
 
-        kwargs["expiration_date"] = expiration_date
-        del kwargs["category"]
+            kwargs["expiration_date"] = expiration_date
 
-        return Food(**kwargs)
+            return Food(**kwargs)
 
-    elif kwargs["category"].lower() == "apparel":
+        elif category.lower() == "apparel":
 
-        del kwargs["category"]
+            return Apparel(**kwargs)
 
-        return Apparel(**kwargs)
+        elif category.lower() == "household":
 
-    elif kwargs["category"].lower() == "household":
+            return Household(**kwargs)
 
-        del kwargs["category"]
+        elif category.lower() == "toys":
 
-        return Household(**kwargs)
+            return Toys(**kwargs)
 
-    elif kwargs["category"].lower() == "toys":
+        elif category.lower() == "book":
 
-        del kwargs["category"]
+            author = input("Author: ")
 
-        return Toys(**kwargs)
+            kwargs["author"] = author
 
-    elif kwargs["category"].lower() == "books":
+            return Book(**kwargs)
 
-        del kwargs["category"]
+        else:
 
-        author = input("Author: ")
+            raise ValueError("Invalid category")
 
-        kwargs["author"] = author
+    except ValueError as e:
 
-        return Book(**kwargs)
+        print(f"Error:{e}")
 
-    else:
-
-        raise ValueError("Invalid category")
+        return None
 
 
 def im_test():
