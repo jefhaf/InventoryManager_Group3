@@ -4,7 +4,7 @@ from product import Product
 class Electronics(Product):
     def __init__(
         self,
-        name: str,
+        make: str,
         model: int,
         colour: str,
         price: float,
@@ -15,7 +15,7 @@ class Electronics(Product):
         Initialize Electronics product with warranty_years.
         """
         super().__init__(
-            name=name,
+            make=make,
             model=model,
             colour=colour,
             price=price,
@@ -57,7 +57,7 @@ class Electronics(Product):
             raise ValueError("Invalid category for Electronics product")
 
         instance = cls(
-            name=data["name"],
+            make=data["make"],
             model=data["model"],
             colour=data["colour"],
             price=data["price"],

@@ -5,7 +5,7 @@ class Food(Product):
 
     def __init__(
         self,
-        name: str,
+        make: str,
         model: int,
         colour: str,
         price: float,
@@ -15,7 +15,7 @@ class Food(Product):
         """
         Initialize Food product with expiration_date.
         """
-        super().__init__(name,
+        super().__init__(make,
                          model, colour,
                          price, quantity,
                          category="Food")
