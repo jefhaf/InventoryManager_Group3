@@ -8,7 +8,7 @@ class Product(ABC):
 
     arguments:
     id (str): Unique identifier for the product.
-    name (str): Name of the product.
+    make (str): make of the product.
     model (int): Model number of the product.
     colour (str): Colour of the product.
     price (int): Price of the product.
@@ -17,7 +17,7 @@ class Product(ABC):
 
     def __init__(
         self,
-        name: str,
+        make: str,
         model: int,
         colour: str,
         price: float,
@@ -26,7 +26,7 @@ class Product(ABC):
     ):
 
         self.id = self.assign_id(category)
-        self.name = name
+        self.make = make
         self.model = model
         self.__price = price
         self.quantity = quantity
@@ -70,7 +70,7 @@ class Product(ABC):
         """Serialize the product to a dictionary."""
         return {
             "id": self.id,
-            "name": self.name,
+            "make": self.make,
             "model": self.model,
             "colour": self.colour,
             "price": self.price,
@@ -84,7 +84,7 @@ class Product(ABC):
         Deserialize a product from a dictionary.
         """
         instance = cls(
-            name=data["name"],
+            make=data["make"],
             model=data["model"],
             colour=data["colour"],
             price=data["price"],
@@ -95,7 +95,7 @@ class Product(ABC):
 
     def __str__(self):
         return (
-            f"Product(ID: {self.id}, Name: {self.name}, Model: {self.model}, "
+            f"Product(ID: {self.id}, make: {self.make}, Model: {self.model}, "
             f"Colour: {self.colour}, "
             f"Price: {self.__price}, Quantity: {self.quantity}, "
             f"Total Price: {self.get_total_price()}, "
