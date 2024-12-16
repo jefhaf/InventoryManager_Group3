@@ -3,13 +3,13 @@ from .product import Product
 
 class Apparel(Product):
 
-    def __init__(self, name: str, model: int,
+    def __init__(self, make: str, model: int,
                  colour: str, price: int, quantity: int):
         """
         Initialize Apparel product.
         """
         super().__init__(
-            name=name,
+            make=make,
             model=model,
             colour=colour,
             price=price,
