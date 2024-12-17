@@ -3,7 +3,7 @@ from .product import Product
 
 class Household(Product):
 
-    def __init__(self, name: str, model: int,
+    def __init__(self, make: str, model: int,
                  colour: str, price: int,
                  quantity: int):
         """
@@ -11,7 +11,7 @@ class Household(Product):
         """
 
         super().__init__(
-            name=name,
+            make=make,
             model=model,
             colour=colour,
             price=price,
