@@ -24,7 +24,7 @@ class InventoryManager:
     def add_product(self):
         """add new product to inventory"""
         print("Please give details about new product:")
-        name = input("name: ")
+        make = input("make: ")
         model = input("Model: ")
         category = input(
             "Category (electronics, food, apparel, household, toys, books): "
@@ -34,7 +34,7 @@ class InventoryManager:
         colour = input("Colour: ")
 
         kwargs = {
-            "name": name,
+            "make": make,
             "model": model,
             "category": category,
             "quantity": quantity,
@@ -126,6 +126,21 @@ def product_factory(**kwargs):
         print(f"Error:{e}")
 
         return None
+
+
+def is_exist_product(self, make: str, model: str) -> bool:
+
+    for item in self.product_database:
+
+        if any(
+            product["make"] == make
+            and product["model"] == model
+            for product in item["records"]
+        ):
+
+            return True
+
+    return False
 
 
 def im_test():
