@@ -72,7 +72,7 @@ class InventoryManager:
 
                 if user_choice == "n":
 
-                    return
+                    return "Exiting....."
 
                 elif user_choice == "y":
 
