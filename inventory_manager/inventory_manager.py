@@ -18,7 +18,6 @@ class InventoryManager:
         self.product_database = FileHandler.load_from_json()
 
     def search_product_by_user(self):
-        initial_search = True
 
         kwargs = {}
         while True:
@@ -32,33 +31,96 @@ class InventoryManager:
             if model_user_input:
                 kwargs["model"] = model_user_input
 
-            low_price_user_input = input(
-                "specify lower price limit or leave empty: "
-            )
+            low_price_user_input = input("specify lower price limit or leave empty: ")
             if low_price_user_input:
-                kwargs["model"] = low_price_user_input
+                try:
+                    kwargs["low_price"] = float(low_price_user_input)
+                except ValueError:
+                    print("Invalid input for low price. Input must be a digit.")
 
-            high_price_user_input = input(
-                "specify upper price limitor leave empty: "
-            )
+            high_price_user_input = input("specify upper price limitor leave empty: ")
             if high_price_user_input:
-                kwargs["model"] = high_price_user_input
+                try:
+                    kwargs["high_price"] = float(high_price_user_input)
+                except ValueError:
+                    print("Invalid input for high price. Input must be a digit")
 
             category_user_input = input("specify category or leave empty: ")
             if category_user_input:
-                kwargs["model"] = category_user_input
+                kwargs["category"] = category_user_input
 
             colour_user_input = input("specify colour or leave empty: ")
             if colour_user_input:
-                kwargs["model"] = colour_user_input
+                kwargs["colour"] = colour_user_input
 
-            self.search_product(**kwargs)
+            search_result = self.search_product(**kwargs)
+            if search_result:
+                print(f"Found {len(search_result)} products:")
+                for product in search_result:
+                    print(product)
+
+            else:
+                print("No products found.")
+
+            valid_user_choice = False
+
+            while not valid_user_choice:
+
+                print("Do you want to continue with the search?")
+
+                user_choice = input("Y/N: ").lower()
+
+                if user_choice == "n":
+
+                    return
+
+                elif user_choice == "y":
+
+                    valid_user_choice = True
+
+                else:
+
+                    print("Invalid choice, please enter Y/N.")
 
         # call search function
 
     def search_product(self, **kwargs):
-        """Search for product in inventory"""
+        """Search for product in inventory by matching any field."""
         search_results = []
+
+        make = kwargs.get("make")
+        model = kwargs.get("model")
+        category = kwargs.get("category")
+        colour = kwargs.get("colour")
+        low_price = kwargs.get("low_price")
+        high_price = kwargs.get("high_price")
+
+        for category_database in self.product_database:
+             
+            if (
+                category
+                and category.lower() not in category_database["table_name"].lower()
+            ):
+                continue
+
+            for product in category_database["records"]:
+
+                if (
+                    (make and make.lower() in product["make"].lower())
+                    or (model and model.lower() in product["model"].lower())
+                    or (colour and colour.lower() in product["colour"].lower())
+                    or (
+                        low_price is not None
+                        and product["low_price"] >= low_price
+                    )
+                    or (
+                        high_price is not None
+                        and product["high_price"] <= high_price
+                    )
+                ):
+                    search_results.append(product)
+
+        return search_results
 
     def is_exist_product(self, make: str, model: str) -> bool:
 
@@ -233,7 +295,7 @@ def im_test():
     print(im.product_database)
 
     # im.add_product()
-    print(im.get_total_inventory_value())
+    print(im.search_product_by_user())
     print()
 
 
