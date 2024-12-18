@@ -67,7 +67,12 @@ class InventoryManager:
             low_price_user_input = input("")
             if low_price_user_input:
                 try:
-                    kwargs["low_price"] = float(low_price_user_input)
+
+                    low_price_user_input = float(low_price_user_input)
+
+                    if low_price_user_input < 0:
+                        low_price_user_input = 0
+                    kwargs["low_price"] = low_price_user_input
                 except ValueError:
                     print(
                         "Invalid input for low price. Input must be a digit."
@@ -83,7 +88,11 @@ class InventoryManager:
             high_price_user_input = input("")
             if high_price_user_input:
                 try:
-                    kwargs["high_price"] = float(high_price_user_input)
+                    if high_price_user_input:
+                        high_price_user_input = float(high_price_user_input)
+                    else:
+                        high_price_user_input = None
+                    kwargs["high_price"] = high_price_user_input
                 except ValueError:
                     print(
                         "Invalid input for high price. Input must be a digit"
@@ -155,12 +164,15 @@ class InventoryManager:
 
         for category_database in self.product_database:
 
+            only_category = category and not any(
+                [make, model, colour, low_price, high_price]
+            )
+
             if (
-                category
-                and category.lower()
-                not in category_database["table_name"].lower()
+                only_category
+                and category.lower() in category_database["table_name"].lower()
             ):
-                continue
+                search_results.extend(category_database["records"])
 
             for product in category_database["records"]:
 
@@ -168,11 +180,7 @@ class InventoryManager:
                     (make and make.lower() in product["make"].lower())
                     or (model and model.lower() in product["model"].lower())
                     or (colour and colour.lower() in product["colour"].lower())
-                    or (low_price and product["low_price"] >= low_price)
-                    or (
-                        high_price is not None
-                        and product["high_price"] <= high_price
-                    )
+                    or ((low_price is not None and product["price"] >= low_price) and (high_price is not None and product["price"] <= high_price))
                 ):
                     search_results.append(product)
 
