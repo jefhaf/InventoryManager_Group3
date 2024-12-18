@@ -1,4 +1,5 @@
 import sys
+from stringcolor import cs
 
 sys.path.append("..")
 # from inventory.products.product import Product
@@ -18,38 +19,95 @@ class InventoryManager:
         self.product_database = FileHandler.load_from_json()
 
     def search_product_by_user(self):
+        # TODO give initial default filter parameters
+        # TODO make clear its a filter (instad of search)
+        # TODO provide current filter argument and ask user if he wants to change the filter argument
 
-        kwargs = {}
+        kwargs = {
+            "make": None,
+            "model": None,
+            "low_price": 0,
+            "high_price": None,
+            "category": None,
+            "colour": None,
+        }
         while True:
             #  user input
-            print("Please provide one or more search parameters")
-            make_user_input = input("specify make or leave empty: ")
+            print(cs("Update filter arguments:", "blue"))
+            print(
+                cs(
+                    f"Current filter for 'make': {kwargs['make']}. "
+                    "Enter new value or leave empty to keep.",
+                    "green",
+                )
+            )
+            make_user_input = input("")
             if make_user_input:
                 kwargs["make"] = make_user_input
 
-            model_user_input = input("specify model or leave empty: ")
+            print(
+                cs(
+                    f"Current filter for 'model': {kwargs['model']}. "
+                    "Enter new value or leave empty to keep.",
+                    "green",
+                )
+            )
+            model_user_input = input("")
             if model_user_input:
                 kwargs["model"] = model_user_input
 
-            low_price_user_input = input("specify lower price limit or leave empty: ")
+            print(
+                cs(
+                    f"Current filter for 'low_price': {kwargs['low_price']}. "
+                    "Enter new value or leave empty to keep.",
+                    "green",
+                )
+            )
+
+            low_price_user_input = input("")
             if low_price_user_input:
                 try:
                     kwargs["low_price"] = float(low_price_user_input)
                 except ValueError:
-                    print("Invalid input for low price. Input must be a digit.")
+                    print(
+                        "Invalid input for low price. Input must be a digit."
+                    )
 
-            high_price_user_input = input("specify upper price limitor leave empty: ")
+            print(
+                cs(
+                    f"Current filter for 'high_price': {kwargs['high_price']}. "
+                    "Enter new value or leave empty to keep.",
+                    "green",
+                )
+            )
+            high_price_user_input = input("")
             if high_price_user_input:
                 try:
                     kwargs["high_price"] = float(high_price_user_input)
                 except ValueError:
-                    print("Invalid input for high price. Input must be a digit")
+                    print(
+                        "Invalid input for high price. Input must be a digit"
+                    )
 
-            category_user_input = input("specify category or leave empty: ")
+            print(
+                cs(
+                    f"Current filter for 'category': {kwargs['category']}. "
+                    "Enter new value or leave empty to keep.",
+                    "green",
+                )
+            )
+            category_user_input = input("")
             if category_user_input:
                 kwargs["category"] = category_user_input
 
-            colour_user_input = input("specify colour or leave empty: ")
+            print(
+                cs(
+                    f"Current filter for 'colour': {kwargs['colour']}. "
+                    "Enter new value or leave empty to keep.",
+                    "green",
+                )
+            )
+            colour_user_input = input("")
             if colour_user_input:
                 kwargs["colour"] = colour_user_input
 
@@ -96,10 +154,11 @@ class InventoryManager:
         high_price = kwargs.get("high_price")
 
         for category_database in self.product_database:
-             
+
             if (
                 category
-                and category.lower() not in category_database["table_name"].lower()
+                and category.lower()
+                not in category_database["table_name"].lower()
             ):
                 continue
 
@@ -109,10 +168,7 @@ class InventoryManager:
                     (make and make.lower() in product["make"].lower())
                     or (model and model.lower() in product["model"].lower())
                     or (colour and colour.lower() in product["colour"].lower())
-                    or (
-                        low_price is not None
-                        and product["low_price"] >= low_price
-                    )
+                    or (low_price and product["low_price"] >= low_price)
                     or (
                         high_price is not None
                         and product["high_price"] <= high_price
