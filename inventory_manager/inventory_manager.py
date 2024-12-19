@@ -1,5 +1,6 @@
 import sys
 from stringcolor import cs
+from datetime import datetime
 
 sys.path.append("..")
 # from inventory.products.product import Product
@@ -17,6 +18,10 @@ class InventoryManager:
     def __init__(self):
         # Use method to load the database and store in attribute self.product_database
         self.product_database = FileHandler.load_from_json()
+        self.long_time_ago = "19.12.2024 12:00:00"
+        self.last_expiry_check = datetime.strptime(
+            self.long_time_ago, "%d.%m.%Y %H:%M:%S"
+        )
 
     def search_product_by_user(self):
         # [x] TODO give initial default filter parameters
@@ -328,8 +333,50 @@ class InventoryManager:
         return total_inventory_value
 
     def validate_database(self):
-        """Check for any missing data or wrong datatypes in all entries of database"""
         pass
+
+    def find_expired_products(self):
+        """Find the products and give out a list"""
+
+        expired_products = []
+        good_items = []
+        current_time = datetime.now()
+        for category_database in self.product_database:
+            if category_database["table_name"] == "food":
+                for item in category_database["records"]:
+                    if current_time > item["expiration_date"]:
+                        expired_products.append(item)
+                    else:
+                        good_items.append(item)
+
+        if expired_products:
+            for prod in expired_products:
+                print(prod)
+            choice_remove = input("Do you want to remove these items? Y/N")
+
+            if choice_remove.lower() == "y":
+                for category_database in self.product_database:
+                    if category_database["table_name"] == "food":
+                        category_database["records"] = good_items
+            elif choice_remove.lower() == "n":
+                print("Ok someone will do it...someday!")
+            else:
+                print("No valid user choice. Return to main menu.")
+
+        else:
+            print("No products are expired.")
+
+        return
+
+        pass
+
+    def remove_expired_products(self, expired_products):
+
+        # Todo search and get the expired products
+        # Remove them
+        # update last expiry check
+
+        self.inventory_manager.last_expiry_check = datetime.now()
 
 
 def product_factory(**kwargs):
@@ -353,7 +400,7 @@ def product_factory(**kwargs):
         elif category.lower() == "food":
 
             if not kwargs.get("Expiration date"):
-                expiration_date = input("Expiration date")
+                expiration_date = check_valid_date_input()
                 # [ ] TODO Check valid date
                 kwargs["expiration_date"] = expiration_date
 
@@ -390,6 +437,27 @@ def product_factory(**kwargs):
         print(f"Error:{e}")
 
         return None
+
+
+def check_valid_date_input():
+
+    while True:
+        print("Dateformat should be like 01.01.2000 12:00:00")
+        expiration_date = input("Expiration date")
+        try:
+            # Check if it its viable time format
+            exp_date = datetime.strptime(expiration_date, "%d.%m.%Y %H:%M:%S")
+            # Check if give date is in the future
+            if exp_date > datetime.now():
+                return expiration_date
+            else:
+                print(
+                    "Expiration Date must be in the future. Please enter correct date information."
+                )
+
+        except ValueError as e:
+            print(f"ValueError: {e}")
+            return False
 
 
 def main():

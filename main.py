@@ -3,7 +3,7 @@
 from inventory_manager.inventory_manager import InventoryManager
 from stringcolor import cs
 import user_database.user_database as user_db
-
+from datetime import datetime, timedelta
 
 class Main:
     def __init__(self) -> None:
@@ -35,7 +35,7 @@ class Main:
         pass
 
     def log_in(self):
-        # TODO Check if login is correct ...
+        # [x] TODO Check if login is correct ...
         username = input("username: ")
         password = input("password: ")
         user_role = user_db.login_user(username, password)
@@ -84,6 +84,22 @@ class LogIn:
     def display(self):
 
         while True:
+
+            last_check = datetime.strftime(self.inventory_manager.last_expiry_check, "%d.%m.%Y %H:%M:%S")
+            print(last_check)
+
+            current_time = datetime.now()
+            time_since_last_check = current_time - self.inventory_manager.last_expiry_check
+            print(type(time_since_last_check))
+
+            warning_expiry = timedelta(days=1)
+            if time_since_last_check > warning_expiry:
+                print("Check expired products!")
+            # Todo check expirateion dates ....
+            # method remove expired products
+            # self.inventory_manager.last_expiry_check = datetime.now()
+
+            # [ ] TODO clean up duplicate code
             if self.user_role == "admin":
                 print(cs("****************************", "SteelBlue2"))
                 print("Please choose an option:")
@@ -143,8 +159,6 @@ class LogIn:
         )
 
     def back_to_main_menu(self):
-
-        # TODO need logout functionality
         self.main_menu.display()
 
     def exit_program(self):
