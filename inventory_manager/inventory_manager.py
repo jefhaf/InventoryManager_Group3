@@ -253,9 +253,7 @@ class InventoryManager:
         user_confirmation = False
 
         while not user_confirmation:
-            user_choice = input(
-                f"Are you sure you want to {confirm_question}? Y/N"
-            )
+            user_choice = input(f"{confirm_question} Y/N")
             if user_choice == "n":
                 print(cs("Removal aborted.....", "Grey"))
                 user_confirmation = True
@@ -284,10 +282,10 @@ class InventoryManager:
                 for product in item["records"]:
 
                     if product["make"] == make and product["model"] == model:
-                        # TODO Ask for confirmation
+                        # [x] TODO Ask for confirmation
                         print(product)
                         confirmed = self.ask_for_confirmation(
-                            "delete the product record"
+                            "Are you sure to telete the record?"
                         )
                         if confirmed:
                             item["records"].remove(product)

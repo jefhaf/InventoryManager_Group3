@@ -1,7 +1,8 @@
+"""Main Inventory Manager Function"""
+
 from inventory_manager.inventory_manager import InventoryManager
 from stringcolor import cs
-
-"""Main Inventory Manager Function"""
+import user_database.user_database as user_db
 
 
 class Main:
@@ -35,9 +36,12 @@ class Main:
 
     def log_in(self):
         # TODO Check if login is correct ...
-
-        logged = LogIn(self, self.inventory_manager)
-        logged.display()
+        username = input("username: ")
+        password = input("password: ")
+        user_role = user_db.login_user(username, password)
+        if user_role:
+            logged = LogIn(self, self.inventory_manager, user_role)
+            logged.display()
 
     def exit_program(self):
         print("Exiting the program. Goodbye!")
@@ -45,37 +49,72 @@ class Main:
 
 
 class LogIn:
-    def __init__(self, main_menu, inventory_manager, *args, **kwargs) -> None:
+    def __init__(
+        self, main_menu, inventory_manager, user_role, *args, **kwargs
+    ) -> None:
         self.inventory_manager = inventory_manager
-
-        self.options = {
-            "1": self.search_product,
-            "2": self.add_product,
-            "3": self.remove_product,
-            "4": self.update_quantity,
-            "5": self.inventory_value,
-            "6": self.back_to_main_menu,
-            "7": self.exit_program,
-        }
+        self.user_role = user_role
+        if self.user_role == "admin":
+            self.options = {
+                "1": self.search_product,
+                "2": self.add_product,
+                "3": self.remove_product,
+                "4": self.update_quantity,
+                "5": self.inventory_value,
+                "6": self.back_to_main_menu,
+                "7": self.exit_program,
+                "8": self.create_user,
+                "9": self.show_users,
+                "10": self.remove_user,
+            }
+        elif self.user_role == "user":
+            self.options = {
+                "1": self.search_product,
+                "2": self.add_product,
+                "3": self.remove_product,
+                "4": self.update_quantity,
+                "5": self.inventory_value,
+                "6": self.back_to_main_menu,
+                "7": self.exit_program,
+            }
+        else:
+            print("Invalid role choice.")
         self.main_menu = main_menu  # Store the main menu
 
     def display(self):
 
         while True:
-            print(cs("****************************", "SteelBlue2"))
-            print("Please choose an option:")
-            print("1. Search products")
-            print("2. Add product")
-            print("3. Remove product")
-            print("4. Update quantity of a product")
-            print("5. Get total inventory value")
-            print("6. Back to main menu")
-            print("7. Exit program")
-            print(cs("****************************", "SteelBlue2"))
-            self.get_input()
-        else:
-            self.main_menu.display()
-    
+            if self.user_role == "admin":
+                print(cs("****************************", "SteelBlue2"))
+                print("Please choose an option:")
+                print("1. Search products")
+                print("2. Add product")
+                print("3. Remove product")
+                print("4. Update quantity of a product")
+                print("5. Get total inventory value")
+                print("6. Back to main menu")
+                print("7. Exit program")
+                print("8. Create user")
+                print("9. Show users")
+                print("10. Remove user")
+                print(cs("****************************", "SteelBlue2"))
+                self.get_input()
+
+            elif self.user_role == "user":
+                print(cs("****************************", "SteelBlue2"))
+                print("Please choose an option:")
+                print("1. Search products")
+                print("2. Add product")
+                print("3. Remove product")
+                print("4. Update quantity of a product")
+                print("5. Get total inventory value")
+                print("6. Back to main menu")
+                print("7. Exit program")
+                print(cs("****************************", "SteelBlue2"))
+                self.get_input()
+            else:
+                self.main_menu.display()
+
     def get_input(self):
         prompt = input("Enter choice: ")
         if prompt in self.options:
@@ -96,17 +135,36 @@ class LogIn:
         self.inventory_manager.update_quantity()
 
     def inventory_value(self):
-        total_inventory_value = self.inventory_manager.get_total_inventory_value()
-        print(cs(f"Total inventory value: {total_inventory_value}" , "DarkOrange"))
+        total_inventory_value = (
+            self.inventory_manager.get_total_inventory_value()
+        )
+        print(
+            cs(f"Total inventory value: {total_inventory_value}", "DarkOrange")
+        )
 
     def back_to_main_menu(self):
-        
+
         # TODO need logout functionality
         self.main_menu.display()
 
     def exit_program(self):
         print("Exiting the program. Goodbye!")
         exit()
+
+    def create_user(self):
+        username = input("username: ")
+        password = input("password: ")
+        role = input("admin/user")
+        if role in ["admin", "user"]:
+            user_db.register_user(username, password, role)
+        else:
+            print("Invalid role choice.")
+
+    def show_users(self):
+        user_db.view_all_users()
+
+    def remove_user(self):
+        user_db.remove_user()
 
 
 # def main():
