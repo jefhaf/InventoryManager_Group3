@@ -13,16 +13,6 @@
                 "warranty_years": "222"
             },
             {
-                "id": "EL11190550",
-                "make": "tototot",
-                "model": "mamama",
-                "colour": "pinkple",
-                "price": 1.0,
-                "quantity": 55555,
-                "category": "Electronics",
-                "warranty_years": "5"
-            },
-            {
                 "id": "TO22694396",
                 "make": "jellobeangun",
                 "model": "Slinky",
@@ -30,16 +20,6 @@
                 "price": 420.69,
                 "quantity": 7,
                 "category": "Toys"
-            },
-            {
-                "id": "EL16655945",
-                "make": "test",
-                "model": "3123",
-                "colour": "blue",
-                "price": 22.0,
-                "quantity": 1000,
-                "category": "Electronics",
-                "warranty_years": "23"
             }
         ]
     },

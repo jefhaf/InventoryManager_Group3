@@ -10,14 +10,14 @@ class FileHandler:
     @staticmethod
     def save_to_json(products):
         # products_dicts = [product.to_dict() for product in products]
-        with open("../database/products.json", "w") as file:
+        with open("database/products.json", "w") as file:
             json.dump(products, file, indent=4)
 
     @staticmethod
     def load_from_json():
         print(sys.path[0])
         try:
-            with open("../database/products.json", "r") as file:
+            with open("database/products.json", "r") as file:
                 product_dicts = json.load(file)
         except (FileNotFoundError, ImportError):
             return []

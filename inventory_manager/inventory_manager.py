@@ -19,9 +19,9 @@ class InventoryManager:
         self.product_database = FileHandler.load_from_json()
 
     def search_product_by_user(self):
-        # TODO give initial default filter parameters
-        # TODO make clear its a filter (instad of search)
-        # TODO provide current filter argument and ask user if he wants to change the filter argument
+        # [x] TODO give initial default filter parameters
+        # [x] TODO make clear its a filter (instad of search)
+        # [x] TODO provide current filter argument and ask user if he wants to change the filter argument
 
         kwargs = {
             "make": None,
@@ -122,12 +122,13 @@ class InventoryManager:
 
             search_result = self.search_product(**kwargs)
             if search_result:
-                print(f"Found {len(search_result)} products:")
+                print(cs(f"Keyword arguments are: {kwargs}", "lightGrey14"))
+                print(cs(f"Found {len(search_result)} products:", "Green"))
                 for product in search_result:
                     print(product)
 
             else:
-                print("No products found.")
+                print(cs("No products found.", "Red2"))
 
             valid_user_choice = False
 
@@ -180,7 +181,16 @@ class InventoryManager:
                     (make and make.lower() in product["make"].lower())
                     or (model and model.lower() in product["model"].lower())
                     or (colour and colour.lower() in product["colour"].lower())
-                    or ((low_price is not None and product["price"] >= low_price) and (high_price is not None and product["price"] <= high_price))
+                    or (
+                        (
+                            low_price is not None
+                            and product["price"] >= low_price
+                        )
+                        and (
+                            high_price is not None
+                            and product["price"] <= high_price
+                        )
+                    )
                 ):
                     search_results.append(product)
 
@@ -239,11 +249,33 @@ class InventoryManager:
 
             FileHandler.save_to_json(self.product_database)
 
+    def ask_for_confirmation(self, confirm_question):
+        user_confirmation = False
+
+        while not user_confirmation:
+            user_choice = input(
+                f"Are you sure you want to {confirm_question}? Y/N"
+            )
+            if user_choice == "n":
+                print(cs("Removal aborted.....", "Grey"))
+                user_confirmation = True
+                user_confirmation_choice = False
+
+            elif user_choice == "y":
+                print(cs("Product record removed.....", "Green"))
+                user_confirmation = True
+                user_confirmation_choice = True
+
+            else:
+                print("Invalid choice, please enter Y/N.")
+        return user_confirmation_choice
+
     def remove_product(self):
         """Remove existing product from inventory"""
         print("Please give details about product to delete:")
         make = input("make: ")
         model = input("Model: ")
+        # TODO use search function  and give option to choose result for removal
 
         if self.is_exist_product(make, model):
 
@@ -252,13 +284,20 @@ class InventoryManager:
                 for product in item["records"]:
 
                     if product["make"] == make and product["model"] == model:
-                        item["records"].remove(product)
+                        # TODO Ask for confirmation
+                        print(product)
+                        confirmed = self.ask_for_confirmation(
+                            "delete the product record"
+                        )
+                        if confirmed:
+                            item["records"].remove(product)
                         FileHandler.save_to_json(self.product_database)
 
     def update_quantity(self):
         """Update quantity of a product in inventory"""
         make = input("make: ")
         model = input("Model: ")
+        # TODO use search function  and give option to choose result for removal
 
         if self.is_exist_product(make, model):
 
@@ -280,7 +319,10 @@ class InventoryManager:
 
         for category_dabase in self.product_database:
             for record in category_dabase["records"]:
-                del record["id"]
+                print(record)
+                print()
+                if record.get("id"):
+                    del record["id"]
 
                 price_calc_object = product_factory(**record)
                 total_inventory_value += price_calc_object.get_total_price()
@@ -303,7 +345,7 @@ def product_factory(**kwargs):
     try:
         if category.lower() == "electronics":
 
-            if not kwargs["warranty_years"]:
+            if not kwargs.get("warranty_years"):
                 warranty_years = input("Warranty in years: ")
 
                 kwargs["warranty_years"] = warranty_years
@@ -312,9 +354,9 @@ def product_factory(**kwargs):
 
         elif category.lower() == "food":
 
-            if not kwargs["Expiration date"]:
+            if not kwargs.get("Expiration date"):
                 expiration_date = input("Expiration date")
-
+                # [ ] TODO Check valid date
                 kwargs["expiration_date"] = expiration_date
 
             return Food(**kwargs)
@@ -333,7 +375,7 @@ def product_factory(**kwargs):
 
         elif category.lower() == "book":
 
-            if not kwargs["Author"]:
+            if not kwargs.get("Author"):
 
                 author = input("Author: ")
 
@@ -352,15 +394,18 @@ def product_factory(**kwargs):
         return None
 
 
-def im_test():
+def main():
     # Create insctance of InventoryManager
-    im = InventoryManager()
+    im = inventory_manager()
 
     print(im.product_database)
 
     # im.add_product()
-    print(im.search_product_by_user())
+    # print(im.search_product_by_user())
     print()
 
 
-im_test()
+# im_test()
+
+if __name__ == "__main__":
+    main()
