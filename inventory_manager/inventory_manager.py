@@ -238,21 +238,21 @@ class InventoryManager:
             }
 
             new_product = product_factory(**kwargs)
-
-            new_product_info = new_product.to_dict()
-
-            for item in self.product_database:
-                if item["table_name"] == category:
-                    item["records"].append(new_product_info)
-
-            """ if category.lower() == "electronics":
-                new_product = Electronics(name=name, model=model, warranty_years=warranty_years, quantity=quantity, price=price, colour=colour)
+            if new_product:
                 new_product_info = new_product.to_dict()
-                for item in self.product_database:
-                    if item["table_name"] == "electronics":
-                        item["records"].append(new_product_info) """
 
-            FileHandler.save_to_json(self.product_database)
+                for item in self.product_database:
+                    if item["table_name"] == category:
+                        item["records"].append(new_product_info)
+
+                """ if category.lower() == "electronics":
+                    new_product = Electronics(name=name, model=model, warranty_years=warranty_years, quantity=quantity, price=price, colour=colour)
+                    new_product_info = new_product.to_dict()
+                    for item in self.product_database:
+                        if item["table_name"] == "electronics":
+                            item["records"].append(new_product_info) """
+
+                FileHandler.save_to_json(self.product_database)
 
     def ask_for_confirmation(self, confirm_question):
         user_confirmation = False
@@ -344,7 +344,9 @@ class InventoryManager:
         for category_database in self.product_database:
             if category_database["table_name"] == "food":
                 for item in category_database["records"]:
-                    if current_time > item["expiration_date"]:
+                    if current_time > datetime.strptime(
+                        item["expiration_date"], "%d.%m.%Y %H:%M:%S"
+                    ):
                         expired_products.append(item)
                     else:
                         good_items.append(item)
@@ -358,6 +360,8 @@ class InventoryManager:
                 for category_database in self.product_database:
                     if category_database["table_name"] == "food":
                         category_database["records"] = good_items
+                        FileHandler.save_to_json(self.product_database)
+                        self.last_expiry_check = datetime.now()
             elif choice_remove.lower() == "n":
                 print("Ok someone will do it...someday!")
             else:
@@ -367,8 +371,6 @@ class InventoryManager:
             print("No products are expired.")
 
         return
-
-        pass
 
     def remove_expired_products(self, expired_products):
 
@@ -402,8 +404,10 @@ def product_factory(**kwargs):
             if not kwargs.get("Expiration date"):
                 expiration_date = check_valid_date_input()
                 # [ ] TODO Check valid date
-                kwargs["expiration_date"] = expiration_date
-
+                if expiration_date:
+                    kwargs["expiration_date"] = expiration_date
+                else:
+                    return
             return Food(**kwargs)
 
         elif category.lower() == "apparel":
@@ -443,8 +447,13 @@ def check_valid_date_input():
 
     while True:
         print("Dateformat should be like 01.01.2000 12:00:00")
-        expiration_date = input("Expiration date")
+        print("Please provide expiration date or  'q' to abort.\n")
+        expiration_date = input("Expiration date: ")
         try:
+
+            if expiration_date == "q":
+                print("Add product aborted.")
+                return None
             # Check if it its viable time format
             exp_date = datetime.strptime(expiration_date, "%d.%m.%Y %H:%M:%S")
             # Check if give date is in the future
@@ -457,14 +466,14 @@ def check_valid_date_input():
 
         except ValueError as e:
             print(f"ValueError: {e}")
-            return False
 
 
 def main():
     # Create insctance of InventoryManager
-    im = inventory_manager()
+    im = InventoryManager()
 
     print(im.product_database)
+    im.find_expired_products()
 
     # im.add_product()
     # print(im.search_product_by_user())

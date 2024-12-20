@@ -66,6 +66,7 @@ class LogIn:
                 "8": self.create_user,
                 "9": self.show_users,
                 "10": self.remove_user,
+                "11": self.find_expired_product
             }
         elif self.user_role == "user":
             self.options = {
@@ -86,15 +87,16 @@ class LogIn:
         while True:
 
             last_check = datetime.strftime(self.inventory_manager.last_expiry_check, "%d.%m.%Y %H:%M:%S")
-            print(last_check)
 
             current_time = datetime.now()
             time_since_last_check = current_time - self.inventory_manager.last_expiry_check
-            print(type(time_since_last_check))
-
             warning_expiry = timedelta(days=1)
+
             if time_since_last_check > warning_expiry:
-                print("Check expired products!")
+                print(cs("Reminder: Check expired products!", "Orange"))
+                user_choice = input("Do you want to check now? y/n: ")
+                if user_choice == "y":
+                    self.inventory_manager.find_expired_products()
             # Todo check expirateion dates ....
             # method remove expired products
             # self.inventory_manager.last_expiry_check = datetime.now()
@@ -113,6 +115,7 @@ class LogIn:
                 print("8. Create user")
                 print("9. Show users")
                 print("10. Remove user")
+                print("11. find_expired_products")
                 print(cs("****************************", "SteelBlue2"))
                 self.get_input()
 
@@ -179,6 +182,9 @@ class LogIn:
 
     def remove_user(self):
         user_db.remove_user()
+
+    def find_expired_product(self):
+        self.inventory_manager.find_expired_products()
 
 
 # def main():

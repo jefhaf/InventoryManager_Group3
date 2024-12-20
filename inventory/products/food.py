@@ -15,10 +15,7 @@ class Food(Product):
         """
         Initialize Food product with expiration_date.
         """
-        super().__init__(make,
-                         model, colour,
-                         price, quantity,
-                         category="Food")
+        super().__init__(make, model, colour, price, quantity, category="Food")
 
         self.expiration_date = expiration_date
 
@@ -34,3 +31,31 @@ class Food(Product):
     def __str__(self):
         base_info = super().__str__()
         return f"{base_info}, Expiration Date: {self.expiration_date}"
+
+    def to_dict(self) -> dict:
+        """Serialize the food product to a dictionary."""
+        base_dict = super().to_dict()
+        base_dict["expiration_date"] = self.expiration_date
+        return base_dict
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        """Deserialize a food
+        product from a dictionary."""
+
+        category = data.get("category", "Food")
+        if category != "Food":
+            raise ValueError("Invalid category for food product")
+
+        instance = cls(
+            make=data["make"],
+            model=data["model"],
+            colour=data["colour"],
+            price=data["price"],
+            quantity=data["quantity"],
+            expiration_date=data["expiration_date"],
+        )
+
+        instance.category = category
+
+        return instance
