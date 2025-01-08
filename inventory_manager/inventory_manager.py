@@ -17,6 +17,15 @@ from database import FileHandler
 class InventoryManager:
     def __init__(self):
         # Use method to load the database and store in attribute self.product_database
+        """
+        Initialize the inventory manager.
+
+        This method will load the product database from the
+        predefined json file and store it in the attribute
+        self.product_database. The attribute self.last_expiry_check
+        will be set to a date far in the past.
+        """
+
         self.product_database = FileHandler.load_from_json()
         self.long_time_ago = "19.12.2024 12:00:00"
         self.last_expiry_check = datetime.strptime(
@@ -158,7 +167,17 @@ class InventoryManager:
         # call search function
 
     def search_product(self, **kwargs):
-        """Search for product in inventory by matching any field."""
+        """
+        Search for products in the inventory based on specified filters.
+
+        Args:
+            **kwargs: Optional filters including make, model, category, colour,
+                    low_price, and high_price.
+
+        Returns:
+            A list of products that match the specified filters.
+        """
+
         search_results = []
 
         make = kwargs.get("make")
@@ -202,7 +221,16 @@ class InventoryManager:
         return search_results
 
     def is_exist_product(self, make: str, model: str) -> bool:
+        """
+        Check if a product with the given make and model exists in the inventory.
 
+        Args:
+            make (str): The make of the product.
+            model (str): The model of the product.
+
+        Returns:
+            bool: True if the product exists, False otherwise.
+        """
         for item in self.product_database:
 
             if any(
@@ -215,7 +243,11 @@ class InventoryManager:
         return False
 
     def add_product(self):
-        """add new product to inventory"""
+        """Prompts the user to input details for a new product
+        and adds it to the inventor if it doesn't already exist.
+        Saves the updated inventory to a JSON file.
+        """
+
         print("Please give details about new product:")
         make = input("make: ")
         model = input("Model: ")
@@ -255,6 +287,20 @@ class InventoryManager:
                 FileHandler.save_to_json(self.product_database)
 
     def ask_for_confirmation(self, confirm_question):
+        """
+        Asks user to confirm an action and returns the user's choice.
+
+        Parameters
+        ----------
+        confirm_question : str
+            The question to ask the user for confirmation.
+
+        Returns
+        -------
+        bool
+            True if the user confirmed the action and False if the user
+            chose to abort.
+        """
         user_confirmation = False
 
         while not user_confirmation:
@@ -333,6 +379,7 @@ class InventoryManager:
         return total_inventory_value
 
     def validate_database(self):
+        # TODO What do we do here?
         pass
 
     def find_expired_products(self):
@@ -361,7 +408,7 @@ class InventoryManager:
                     if category_database["table_name"] == "food":
                         category_database["records"] = good_items
                         FileHandler.save_to_json(self.product_database)
-                        
+
             elif choice_remove.lower() == "n":
                 print("Ok someone will do it...someday!")
             else:
@@ -373,10 +420,7 @@ class InventoryManager:
         return
 
     def remove_expired_products(self, expired_products):
-
-        # Todo search and get the expired products
-        # Remove them
-        # update last expiry check
+        """Removes expired products from the inventory."""
 
         self.inventory_manager.last_expiry_check = datetime.now()
 
@@ -444,7 +488,12 @@ def product_factory(**kwargs):
 
 
 def check_valid_date_input():
+    """
+    Prompt the user to input a valid expiration date for a product.
 
+    Checks if the given date is in the correct format and if it is in the future.
+    If the user enters 'q', the function returns None.
+    """
     while True:
         print("Dateformat should be like 01.01.2000 12:00:00")
         print("Please provide expiration date or  'q' to abort.\n")
@@ -469,7 +518,13 @@ def check_valid_date_input():
 
 
 def main():
-    # Create insctance of InventoryManager
+    """
+    Main function to test the InventoryManager class.
+
+    Creates an instance of InventoryManager, prints out the product database,
+    and calls the find_expired_products method to test it.
+
+    """
     im = InventoryManager()
 
     print(im.product_database)

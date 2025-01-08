@@ -10,5 +10,9 @@
     "jef": {
         "password": "$2b$12$xwYieF4rXyeU1jlyifUGc./sghoSjNIjcF0.Vgz/PdZqgrXVsa1FO",
         "role": "user"
+    },
+    "test2": {
+        "password": "$2b$12$jmo8uHgCCT/UKiJvfE/vTu3qLWq13UW5Ba3ejJsAOILCcyv3oDQ4m",
+        "role": "user"
     }
 }
