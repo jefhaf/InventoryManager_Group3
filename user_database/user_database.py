@@ -65,15 +65,16 @@ def login_user(username: str, password: str):
     hashed_password = users[username]["password"]
     if verify_password(password, hashed_password):
         print(f"Welcome, {username}!")
-        
+
         # Access the role of the user and store it in a variable
         user_role = users[username]["role"]
-        
+
         print(f"Your role: {user_role}")
         return user_role  # Return the role of the user
     else:
-        print("Incorrect password.")
+        print("Incorrect password. Please contact management.")
         return None  # Return None if password is incorrect
+
 
 # Display all users (only accessible by admins)
 def view_all_users():
@@ -86,6 +87,7 @@ def view_all_users():
     for username, user_data in users.items():
         print(f"Username: {username}, Role: {user_data['role']}")
 
+
 # Remove a user (only accessible by admins)
 def remove_user():
     users = load_users()  # Load all users
@@ -96,13 +98,16 @@ def remove_user():
         return
 
     # Confirm the deletion
-    confirmation = input(f"Are you sure you want to remove the user '{username}'? (y/n): ")
-    if confirmation.lower() == 'y':
+    confirmation = input(
+        f"Are you sure you want to remove the user '{username}'? (y/n): "
+    )
+    if confirmation.lower() == "y":
         del users[username]  # Remove the user from the dictionary
         save_users(users)  # Save the updated users back to the file
         print(f"User '{username}' has been removed.")
     else:
         print(f"User '{username}' was not removed.")
+
 
 # Example usage
 if __name__ == "__main__":

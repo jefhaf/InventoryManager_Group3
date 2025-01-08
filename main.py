@@ -4,6 +4,7 @@ from inventory_manager.inventory_manager import InventoryManager
 from stringcolor import cs
 import user_database.user_database as user_db
 from datetime import datetime, timedelta
+from getpass import getpass
 
 class Main:
     def __init__(self) -> None:
@@ -32,12 +33,14 @@ class Main:
             print("Invalid choice")
 
     def register_account(self):
-        pass
+        username = input("username: ")
+        password = getpass("password: ")
+        role = "user"
+        user_db.register_user(username, password, role)
 
     def log_in(self):
-        # [x] TODO Check if login is correct ...
         username = input("username: ")
-        password = input("password: ")
+        password = getpass("password: ")
         user_role = user_db.login_user(username, password)
         if user_role:
             logged = LogIn(self, self.inventory_manager, user_role)

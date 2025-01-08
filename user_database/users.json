@@ -6,5 +6,9 @@
     "test": {
         "password": "$2b$12$UcMjqZGxXsh97NXOkrLBz.6sJ4Qg99TxXLRQjx/V6u5ahv5.QXB2.",
         "role": "user"
+    },
+    "jef": {
+        "password": "$2b$12$xwYieF4rXyeU1jlyifUGc./sghoSjNIjcF0.Vgz/PdZqgrXVsa1FO",
+        "role": "user"
     }
 }

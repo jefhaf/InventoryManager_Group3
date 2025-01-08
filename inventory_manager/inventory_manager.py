@@ -247,7 +247,7 @@ class InventoryManager:
 
                 """ if category.lower() == "electronics":
                     new_product = Electronics(name=name, model=model, warranty_years=warranty_years, quantity=quantity, price=price, colour=colour)
-                    new_product_info = new_product.to_dict()
+                    new_product_info =  new_product.to_dict()
                     for item in self.product_database:
                         if item["table_name"] == "electronics":
                             item["records"].append(new_product_info) """
@@ -322,8 +322,8 @@ class InventoryManager:
 
         for category_dabase in self.product_database:
             for record in category_dabase["records"]:
-                print(record)
-                print()
+                # print(record)
+                # print()
                 if record.get("id"):
                     del record["id"]
 
@@ -361,7 +361,7 @@ class InventoryManager:
                     if category_database["table_name"] == "food":
                         category_database["records"] = good_items
                         FileHandler.save_to_json(self.product_database)
-                        self.last_expiry_check = datetime.now()
+                        
             elif choice_remove.lower() == "n":
                 print("Ok someone will do it...someday!")
             else:
@@ -369,7 +369,7 @@ class InventoryManager:
 
         else:
             print("No products are expired.")
-
+        self.last_expiry_check = datetime.now()
         return
 
     def remove_expired_products(self, expired_products):
