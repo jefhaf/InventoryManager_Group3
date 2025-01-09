@@ -7,8 +7,8 @@ from inventory.products.book import Book
 @pytest.fixture
 def sample_book():
     book1 = Book(
-        name="Lord of the Rings",
-        model=1,
+        make="Houghton Mifflin",
+        model="Lord of the Rings",
         colour="Red",
         price=22.99,
         author="Tolkien",
@@ -17,6 +17,7 @@ def sample_book():
     return book1
 
 
+# region Testbook
 class TestBook:
 
     def test_correct_category(self, sample_book):
@@ -43,44 +44,31 @@ class TestBook:
         result_dict = sample_book.to_dict()
         test_dict = {
             "id": "BO123",
+            "make": "Houghton Mifflin",
             "category": "Book",
-            "name": "Lord of the Rings",
-            "model": 1,
+            "model": "Lord of the Rings",
             "colour": "Red",
             "price": 22.99,
             "quantity": 1,
+            "author": "Tolkien",
         }
         assert result_dict == test_dict
 
+    def test_str_method(self, sample_book):
 
-# Not yet implemented
+        expected_total_price = sample_book.price * sample_book.quantity
+        expected_str = (
+            f"ID: {sample_book.id}, make: {sample_book.make}, Model: {sample_book.model}, "
+            f"Colour: {sample_book.colour}, "
+            f"Price: {sample_book.price}, Quantity: {sample_book.quantity}, "
+            f"Total Price: {expected_total_price}, "
+            f"Category: {sample_book.category}, "
+            f"Author: {sample_book.author}"
+        )
+        assert str(sample_book) == expected_str
 
-# def test_str_method(self, sample_book):
+    def test_returnable(self, sample_book):
+        returnable = sample_book.is_returnable()
+        assert isinstance(returnable, bool)
 
-#     expected_total_price = sample_book.price * sample_book.quantity
-#     expected_str = (
-#         f"Product(ID: {sample_book.id}, Name: {sample_book.name}, Model: {sample_book.model}, "
-#         f"Colour: {sample_book.colour}, "
-#         f"Price: {sample_book.price}, Quantity: {sample_book.quantity}, "
-#         f"Total Price: {expected_total_price})"
-#     )
-#     assert str(sample_book) == expected_str
-
-
-# def test_sold_out(self, sample_book):
-
-#     if sample_book.quantity > 0:
-#         assert sample_book.is_sold_out()
-
-#     elif sample_book.quantity == 0:
-#         assert not sample_book.is_sold_out()
-
-
-# def test_returnable(self, sample_book):
-#         returnable = sample_book.is_returnable()
-#         assert isinstance(returnable, bool)
-
-
-# def test_is_returnable(self, sample_book):
-#     returnable = sample_book.is_returnable()
-#     assert isinstance(returnable, bool)
+# endregion
