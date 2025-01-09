@@ -1,0 +1,18 @@
+{
+    "admin": {
+        "password": "$2b$12$Sle4enB0YIs9sQBp4iVWcOT3sulKdtkMXHLWePvVyI5EYXO0j6Kba",
+        "role": "admin"
+    },
+    "test": {
+        "password": "$2b$12$UcMjqZGxXsh97NXOkrLBz.6sJ4Qg99TxXLRQjx/V6u5ahv5.QXB2.",
+        "role": "user"
+    },
+    "jef": {
+        "password": "$2b$12$xwYieF4rXyeU1jlyifUGc./sghoSjNIjcF0.Vgz/PdZqgrXVsa1FO",
+        "role": "user"
+    },
+    "test2": {
+        "password": "$2b$12$jmo8uHgCCT/UKiJvfE/vTu3qLWq13UW5Ba3ejJsAOILCcyv3oDQ4m",
+        "role": "user"
+    }
+}

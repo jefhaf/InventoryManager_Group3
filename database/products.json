@@ -4,7 +4,7 @@
         "records": [
             {
                 "id": "EL16863242",
-                "name": "wrrrggg",
+                "make": "wrrrggg",
                 "model": "wrgwrg",
                 "colour": "red",
                 "price": 123.0,
@@ -13,18 +13,8 @@
                 "warranty_years": "222"
             },
             {
-                "id": "EL11190550",
-                "name": "tototot",
-                "model": "mamama",
-                "colour": "pinkple",
-                "price": 1.0,
-                "quantity": 55555,
-                "category": "Electronics",
-                "warranty_years": "5"
-            },
-            {
                 "id": "TO22694396",
-                "name": "jellobeangun",
+                "make": "jellobeangun",
                 "model": "Slinky",
                 "colour": "unicorn",
                 "price": 420.69,
@@ -50,7 +40,7 @@
         "records": [
             {
                 "id": "TO29237336",
-                "name": "lolophaser",
+                "make": "lolophaser",
                 "model": "slinky2",
                 "colour": "ruffle",
                 "price": 22.0,
