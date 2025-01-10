@@ -88,16 +88,16 @@ class Product(ABC):
             model=data["model"],
             colour=data["colour"],
             price=data["price"],
-            quantity=data["quantity"]
+            quantity=data["quantity"],
         )
 
         return instance
 
     def __str__(self):
         return (
-            f"Product(ID: {self.id}, make: {self.make}, Model: {self.model}, "
+            f"ID: {self.id}, make: {self.make}, Model: {self.model}, "
             f"Colour: {self.colour}, "
             f"Price: {self.__price}, Quantity: {self.quantity}, "
             f"Total Price: {self.get_total_price()}, "
-            f"Category: {self.category})"
+            f"Category: {self.category}"
         )

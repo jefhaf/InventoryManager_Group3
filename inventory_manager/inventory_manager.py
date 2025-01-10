@@ -15,7 +15,7 @@ from database import FileHandler
 
 
 class InventoryManager:
-    def __init__(self):
+    def __init__(self, filename="database/products.json"):
         # Use method to load the database and store in attribute self.product_database
         """
         Initialize the inventory manager.
@@ -25,8 +25,8 @@ class InventoryManager:
         self.product_database. The attribute self.last_expiry_check
         will be set to a date far in the past.
         """
-
-        self.product_database = FileHandler.load_from_json()
+        self.filename = filename
+        self.product_database = FileHandler.load_from_json(filename=filename)
         self.long_time_ago = "19.12.2024 12:00:00"
         self.last_expiry_check = datetime.strptime(
             self.long_time_ago, "%d.%m.%Y %H:%M:%S"
