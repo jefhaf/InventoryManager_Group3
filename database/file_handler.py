@@ -19,7 +19,8 @@ class FileHandler:
         try:
             with open(filename, "r") as file:
                 product_dicts = json.load(file)
-        except (FileNotFoundError, ImportError):
+        except (FileNotFoundError, ImportError) as error:
+            print(error)
             return []
         return product_dicts
 

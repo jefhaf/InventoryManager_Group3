@@ -99,18 +99,39 @@ class InventoryManager:
                     "green",
                 )
             )
+            # high_price_user_input = input("")
+            # if high_price_user_input:
+            #     try:
+            #         if high_price_user_input:
+            #             high_price_user_input = float(high_price_user_input)
+            #         else:
+            #             high_price_user_input = None
+            #         kwargs["high_price"] = high_price_user_input
+            #     except ValueError:
+            #         print(
+            #             "Invalid input for high price. Input must be a digit"
+            #         )
+
             high_price_user_input = input("")
             if high_price_user_input:
                 try:
-                    if high_price_user_input:
-                        high_price_user_input = float(high_price_user_input)
-                    else:
-                        high_price_user_input = None
-                    kwargs["high_price"] = high_price_user_input
+                    high_price_user_input = float(high_price_user_input)
+                    if high_price_user_input < kwargs["low_price"]:
+                        high_price_user_input = kwargs["low_price"] + 10
+                        print(
+                            "High price must be higher than low price"
+                            f"--> Set to {high_price_user_input}"
+                        )
+
                 except ValueError:
                     print(
                         "Invalid input for high price. Input must be a digit"
                     )
+                    high_price_user_input = None
+
+            else:
+                high_price_user_input = float("inf")
+            kwargs["high_price"] = high_price_user_input
 
             print(
                 cs(
@@ -135,35 +156,39 @@ class InventoryManager:
                 kwargs["colour"] = colour_user_input
 
             search_result = self.search_product(**kwargs)
+            print(cs(f"Keyword arguments are: {kwargs}", "lightGrey14"))
             if search_result:
-                print(cs(f"Keyword arguments are: {kwargs}", "lightGrey14"))
+
                 print(cs(f"Found {len(search_result)} products:", "Green"))
                 for product in search_result:
                     print(product)
+                end_result = search_result
 
             else:
                 print(cs("No products found.", "Red2"))
+                end_result = None
 
-            valid_user_choice = False
+            # valid_user_choice = False
 
-            while not valid_user_choice:
+            # while not valid_user_choice:
 
-                print("Do you want to continue with the search?")
+            #     print("Do you want to continue with the search?")
 
-                user_choice = input("Y/N: ").lower()
+            #     user_choice = input("Y/N: ").lower()
 
-                if user_choice == "n":
+            #     if user_choice == "n":
 
-                    return "Exiting....."
+            #         valid_user_choice = True
+            #         print("Exiting.....")
 
-                elif user_choice == "y":
+            #     elif user_choice == "y":
 
-                    valid_user_choice = True
+            #         valid_user_choice = True
 
-                else:
+            #     else:
 
-                    print("Invalid choice, please enter Y/N.")
-
+            #         print("Invalid choice, please enter Y/N.")
+            return end_result
         # call search function
 
     def search_product(self, **kwargs):
@@ -187,36 +212,74 @@ class InventoryManager:
         low_price = kwargs.get("low_price")
         high_price = kwargs.get("high_price")
 
-        for category_database in self.product_database:
 
-            only_category = category and not any(
-                [make, model, colour, low_price, high_price]
-            )
+        # for category_database in self.product_database:
 
-            if (
-                only_category
-                and category.lower() in category_database["table_name"].lower()
-            ):
-                search_results.extend(category_database["records"])
+        #     only_category = category and not any(
+        #         [make, model, colour, low_price, high_price]
+        #     )
 
+        #     search_results = search_results.append(category_database["records"])
+        #     print(search_results)
+        #     print(self.product_database)
+
+        search_results = self.product_database
+        # If valid category is provided then drop all other categories
+        # makes next step faster
+        if category:
+            search_results = list(filter(lambda x: x["table_name"] == category, search_results))
+        print(search_results)
+
+        # Extract all single products from all records in all categories into products_list
+        products_list = []
+        for category_database in search_results:
             for product in category_database["records"]:
+                products_list.append(product)
 
-                if (
-                    (make and make.lower() in product["make"].lower())
-                    or (model and model.lower() in product["model"].lower())
-                    or (colour and colour.lower() in product["colour"].lower())
-                    or (
-                        (
-                            low_price is not None
-                            and product["price"] >= low_price
-                        )
-                        and (
-                            high_price is not None
-                            and product["price"] <= high_price
-                        )
-                    )
-                ):
-                    search_results.append(product)
+        # Search results is now a list of single products
+        search_results = products_list
+        print("search_results", search_results)
+        # Filter by user input
+        if colour:
+            search_results = list(filter(lambda x: x["colour"] == colour, search_results))
+        if make:
+            search_results = list(filter(lambda x: make in x["make"], search_results))
+        if model:
+            search_results = list(filter(lambda x: x["model"] == model, search_results))
+        if low_price:
+            search_results = list(filter(lambda x: x["price"] >= low_price, search_results))
+        if high_price:
+            search_results = list(filter(lambda x: x["price"] <= high_price, search_results))
+        print("---")
+        print("search_results", search_results)
+
+
+            # if (
+            #     only_category
+            #     and category.lower() in category_database["table_name"].lower()
+            # ):
+            #     search_results.extend(category_database["records"])
+
+
+
+
+            # for product in category_database["records"]:
+            #     if (
+            #         (make and make.lower() in product["make"].lower())
+            #         or (model and model.lower() in product["model"].lower())
+            #         or (colour and colour.lower() in product["colour"].lower())
+            #         or (
+            #             (
+            #                 low_price is not None
+            #                 and product["price"] >= low_price
+            #             )
+            #             and (
+            #                 high_price is not None
+            #                 and product["price"] <= high_price
+            #             )
+            #         )
+            #     ):
+            #         search_results.append(product)
 
         return search_results
 
