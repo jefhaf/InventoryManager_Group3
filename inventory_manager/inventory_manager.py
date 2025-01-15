@@ -14,6 +14,12 @@ from inventory import products
 from database import FileHandler
 
 
+class LowPriceException(Exception):
+    def __init__(self, message="Bad Price arguments"):
+        self.message = message
+        super().__init__(message)
+
+
 class InventoryManager:
     def __init__(self, filename="database/products.json"):
         # Use method to load the database and store in attribute self.product_database
@@ -89,8 +95,10 @@ class InventoryManager:
                     kwargs["low_price"] = low_price_user_input
                 except ValueError:
                     print(
-                        "Invalid input for low price. Input must be a digit."
+                        "Invalid input for low price. Input must be a digit --> Setting to Zero"
                     )
+                    low_price_user_input = 0
+
 
             print(
                 cs(
@@ -127,7 +135,7 @@ class InventoryManager:
                     print(
                         "Invalid input for high price. Input must be a digit"
                     )
-                    high_price_user_input = None
+                    high_price_user_input = float("inf")
 
             else:
                 high_price_user_input = float("inf")
@@ -226,8 +234,9 @@ class InventoryManager:
         search_results = self.product_database
         # If valid category is provided then drop all other categories
         # makes next step faster
+        print(search_results)
         if category:
-            search_results = list(filter(lambda x: x["table_name"] == category, search_results))
+            search_results = list(filter(lambda x: x["table_name"].lower() == category.lower(), search_results))
         print(search_results)
 
         # Extract all single products from all records in all categories into products_list
@@ -241,11 +250,11 @@ class InventoryManager:
         print("search_results", search_results)
         # Filter by user input
         if colour:
-            search_results = list(filter(lambda x: x["colour"] == colour, search_results))
+            search_results = list(filter(lambda x: colour.lower() in x["colour"].lower(), search_results))
         if make:
-            search_results = list(filter(lambda x: make in x["make"], search_results))
+            search_results = list(filter(lambda x: make.lower() in x["make"].lower(), search_results))
         if model:
-            search_results = list(filter(lambda x: x["model"] == model, search_results))
+            search_results = list(filter(lambda x: model.lower() in x["model"].lower(), search_results))
         if low_price:
             search_results = list(filter(lambda x: x["price"] >= low_price, search_results))
         if high_price:
