@@ -34,7 +34,7 @@ password_label = tkinter.Label(
 password_entry = tkinter.Entry(window, show="*")
 
 login_button = tkinter.Button(
-    window, text="Login", borderwidth=3, bg="#196E78", fg="#FFFFFF")
+    window, text="Login", borderwidth=3, bg="#196E78", fg="#FFFFFF", command=validate_login)
 
 login_label.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
 username_label.grid(row=1, column=0, padx=5, pady=5)
