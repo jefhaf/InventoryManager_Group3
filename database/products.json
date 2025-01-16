@@ -29,11 +29,31 @@
     },
     {
         "table_name": "apparel",
-        "records": []
+        "records": [
+            {
+                "id": "AP28193674",
+                "make": "Nike",
+                "model": "Air Force 1 Sneakers",
+                "colour": "White",
+                "price": 105.0,
+                "quantity": 20,
+                "category": "Apparel"
+            }
+        ]
     },
     {
         "table_name": "household",
-        "records": []
+        "records": [
+            {
+                "id": "HO33308876",
+                "make": "Dyson",
+                "model": "V15 Detect Vacuum Cleaner",
+                "colour": "Yellow",
+                "price": 720.0,
+                "quantity": 10,
+                "category": "Household"
+            }
+        ]
     },
     {
         "table_name": "toys",

@@ -1,6 +1,78 @@
+"""Inventory Manager
+
+This module handles all the functions related to searching, adding, removing items inside a database.
+
+This module requires 'stringcolor' to be installed to run properly inside the terminal.
+
+Inside this module are the following classes and methods:
+Classes:
+    LowPriceException: Custom exception for user inputs that cannot be converted into floats (needed for testing).
+    InventoryManager: Class that handles all functionality.
+Methods (InventoryManager):
+    search_product_by_user: Gets info from user to search for product(s). --> calls search_product()
+    search_product: Filters through a database to return items that meet requirements. --> gets called by search_product_by_user()
+    is_exist_product: Checks if an item already exists inside the database and returns a boolean value.
+    add_product: Adds a product to the database and saves said database after that is done.
+    ask_for_confirmation: Asks for validation from the user to remove an item. --> gets called by remove_product()
+    remove_product: Asks for Make and Model to find and possibly remove a found item. --> calls ask_for_confirmation()
+    update_quantity: Searches for product by user input and changes the amount available
+    get_total_inventory_value: Calculates the Sum of every product multiplied by quantity and price
+    find_expired_products: Checks for expired products (food)
+Other functions:
+    product_factory: Factory method to create product objects based on category
+    check_valid_date_input: Checks if the given date is in the correct format and if it is in the future.
+
+"""
+
 import sys
 from stringcolor import cs
 from datetime import datetime
+
+
+"""
+Package and Module Docstrings
+
+Package docstrings should be placed at the top of the package’s __init__.py file. This docstring should list the modules and sub-packages that are exported by the package.
+
+Module docstrings are similar to class docstrings. Instead of classes and class methods being documented, it’s now the module and any functions found within.
+Module docstrings are placed at the top of the file even before any imports.
+Module docstrings should include the following:
+
+
+    A brief description of the module and its purpose
+    A list of any classes, exception, functions, and any other objects exported by the module
+
+The docstring for a module function should include the same items as a class method:
+
+    A brief description of what the function is and what it’s used for
+    Any arguments (both required and optional) that are passed including keyword arguments
+    Label any arguments that are considered optional
+    Any side effects that occur when executing the function
+    Any exceptions that are raised
+    Any restrictions on when the function can be called
+
+
+Spreadsheet Column Printer
+
+This script allows the user to print to the console all columns in the
+spreadsheet. It is assumed that the first row of the spreadsheet is the
+location of the columns.
+
+This tool accepts comma separated value files (.csv) as well as excel
+(.xls, .xlsx) files.
+
+This script requires that `pandas` be installed within the Python
+environment you are running this script in.
+
+This file can also be imported as a module and contains the following
+functions:
+
+    * get_spreadsheet_cols - returns the column headers of the file
+    * main - the main function of the script
+
+
+"""
+
 
 sys.path.append("..")
 # from inventory.products.product import Product
@@ -22,7 +94,6 @@ class LowPriceException(Exception):
 
 class InventoryManager:
     def __init__(self, filename="database/products.json"):
-        # Use method to load the database and store in attribute self.product_database
         """
         Initialize the inventory manager.
 
@@ -39,10 +110,10 @@ class InventoryManager:
         )
 
     def search_product_by_user(self):
-        # [x] TODO give initial default filter parameters
-        # [x] TODO make clear its a filter (instad of search)
-        # [x] TODO provide current filter argument and ask user if he wants to change the filter argument
-
+        """
+        Ask for all information from the user to find specific products.
+        When no input is given, it is skipped and a default value is assumed.
+        """
         kwargs = {
             "make": None,
             "model": None,
@@ -99,7 +170,6 @@ class InventoryManager:
                     )
                     low_price_user_input = 0
 
-
             print(
                 cs(
                     f"Current filter for 'high_price': {kwargs['high_price']}. "
@@ -107,18 +177,6 @@ class InventoryManager:
                     "green",
                 )
             )
-            # high_price_user_input = input("")
-            # if high_price_user_input:
-            #     try:
-            #         if high_price_user_input:
-            #             high_price_user_input = float(high_price_user_input)
-            #         else:
-            #             high_price_user_input = None
-            #         kwargs["high_price"] = high_price_user_input
-            #     except ValueError:
-            #         print(
-            #             "Invalid input for high price. Input must be a digit"
-            #         )
 
             high_price_user_input = input("")
             if high_price_user_input:
@@ -163,6 +221,7 @@ class InventoryManager:
             if colour_user_input:
                 kwargs["colour"] = colour_user_input
 
+            # call search function
             search_result = self.search_product(**kwargs)
             print(cs(f"Keyword arguments are: {kwargs}", "lightGrey14"))
             if search_result:
@@ -176,28 +235,7 @@ class InventoryManager:
                 print(cs("No products found.", "Red2"))
                 end_result = None
 
-            # valid_user_choice = False
-
-            # while not valid_user_choice:
-
-            #     print("Do you want to continue with the search?")
-
-            #     user_choice = input("Y/N: ").lower()
-
-            #     if user_choice == "n":
-
-            #         valid_user_choice = True
-            #         print("Exiting.....")
-
-            #     elif user_choice == "y":
-
-            #         valid_user_choice = True
-
-            #     else:
-
-            #         print("Invalid choice, please enter Y/N.")
             return end_result
-        # call search function
 
     def search_product(self, **kwargs):
         """
@@ -220,23 +258,17 @@ class InventoryManager:
         low_price = kwargs.get("low_price")
         high_price = kwargs.get("high_price")
 
-
-        # for category_database in self.product_database:
-
-        #     only_category = category and not any(
-        #         [make, model, colour, low_price, high_price]
-        #     )
-
-        #     search_results = search_results.append(category_database["records"])
-        #     print(search_results)
-        #     print(self.product_database)
-
         search_results = self.product_database
         # If valid category is provided then drop all other categories
         # makes next step faster
         print(search_results)
         if category:
-            search_results = list(filter(lambda x: x["table_name"].lower() == category.lower(), search_results))
+            search_results = list(
+                filter(
+                    lambda x: x["table_name"].lower() == category.lower(),
+                    search_results,
+                )
+            )
         print(search_results)
 
         # Extract all single products from all records in all categories into products_list
@@ -250,45 +282,35 @@ class InventoryManager:
         print("search_results", search_results)
         # Filter by user input
         if colour:
-            search_results = list(filter(lambda x: colour.lower() in x["colour"].lower(), search_results))
+            search_results = list(
+                filter(
+                    lambda x: colour.lower() in x["colour"].lower(),
+                    search_results,
+                )
+            )
         if make:
-            search_results = list(filter(lambda x: make.lower() in x["make"].lower(), search_results))
+            search_results = list(
+                filter(
+                    lambda x: make.lower() in x["make"].lower(), search_results
+                )
+            )
         if model:
-            search_results = list(filter(lambda x: model.lower() in x["model"].lower(), search_results))
+            search_results = list(
+                filter(
+                    lambda x: model.lower() in x["model"].lower(),
+                    search_results,
+                )
+            )
         if low_price:
-            search_results = list(filter(lambda x: x["price"] >= low_price, search_results))
+            search_results = list(
+                filter(lambda x: x["price"] >= low_price, search_results)
+            )
         if high_price:
-            search_results = list(filter(lambda x: x["price"] <= high_price, search_results))
+            search_results = list(
+                filter(lambda x: x["price"] <= high_price, search_results)
+            )
         print("---")
         print("search_results", search_results)
-
-
-            # if (
-            #     only_category
-            #     and category.lower() in category_database["table_name"].lower()
-            # ):
-            #     search_results.extend(category_database["records"])
-
-
-
-
-            # for product in category_database["records"]:
-            #     if (
-            #         (make and make.lower() in product["make"].lower())
-            #         or (model and model.lower() in product["model"].lower())
-            #         or (colour and colour.lower() in product["colour"].lower())
-            #         or (
-            #             (
-            #                 low_price is not None
-            #                 and product["price"] >= low_price
-            #             )
-            #             and (
-            #                 high_price is not None
-            #                 and product["price"] <= high_price
-            #             )
-            #         )
-            #     ):
-            #         search_results.append(product)
 
         return search_results
 
@@ -396,7 +418,6 @@ class InventoryManager:
         print("Please give details about product to delete:")
         make = input("make: ")
         model = input("Model: ")
-        # TODO use search function  and give option to choose result for removal
 
         if self.is_exist_product(make, model):
 
@@ -405,7 +426,6 @@ class InventoryManager:
                 for product in item["records"]:
 
                     if product["make"] == make and product["model"] == model:
-                        # [x] TODO Ask for confirmation
                         print(product)
                         confirmed = self.ask_for_confirmation(
                             "Are you sure to telete the record?"
@@ -418,7 +438,6 @@ class InventoryManager:
         """Update quantity of a product in inventory"""
         make = input("make: ")
         model = input("Model: ")
-        # TODO use search function  and give option to choose result for removal
 
         if self.is_exist_product(make, model):
 
@@ -440,8 +459,7 @@ class InventoryManager:
 
         for category_dabase in self.product_database:
             for record in category_dabase["records"]:
-                # print(record)
-                # print()
+
                 if record.get("id"):
                     del record["id"]
 
@@ -449,10 +467,6 @@ class InventoryManager:
                 total_inventory_value += price_calc_object.get_total_price()
 
         return total_inventory_value
-
-    def validate_database(self):
-        # TODO What do we do here?
-        pass
 
     def find_expired_products(self):
         """Find the products and give out a list"""
@@ -519,7 +533,6 @@ def product_factory(**kwargs):
 
             if not kwargs.get("Expiration date"):
                 expiration_date = check_valid_date_input()
-                # [ ] TODO Check valid date
                 if expiration_date:
                     kwargs["expiration_date"] = expiration_date
                 else:
@@ -591,23 +604,15 @@ def check_valid_date_input():
 
 def main():
     """
-    Main function to test the InventoryManager class.
-
-    Creates an instance of InventoryManager, prints out the product database,
-    and calls the find_expired_products method to test it.
+    Main function to call for help
+    Main function is there for you if you need it!
 
     """
-    im = InventoryManager()
 
-    print(im.product_database)
-    im.find_expired_products()
-
-    # im.add_product()
-    # print(im.search_product_by_user())
     print()
+    if len(sys.argv) == 2 and sys.argv[1] == "--help":
+        print(__doc__)
 
-
-# im_test()
 
 if __name__ == "__main__":
     main()
