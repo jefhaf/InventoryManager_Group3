@@ -8,7 +8,7 @@ def validate_login():
     password = password_entry.get()
 
     if username == "admin" and password == "admin":
-        messagebox.showinfo("Login successful, welcome, Admin")
+        messagebox.showinfo("Login successful. Welcome, Admin!")
     else:
         messagebox.showinfo("Login failed, invalid username or password")
 
